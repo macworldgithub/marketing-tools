@@ -19,7 +19,7 @@
     {
       "id": "html-paragraph-tags",
       "question": "Can I export dummy text pre-wrapped in HTML paragraph tags?",
-      "answer": "Yes. Selecting the HTML output option wraps every generated block in <p>...</p> tags ready for direct insertion into web templates."
+      "answer": "Yes. Selecting the HTML output option wraps every generated block in HTML paragraph tags ready for direct insertion into web templates."
     },
     {
       "id": "sentence-punctuation-rules",
