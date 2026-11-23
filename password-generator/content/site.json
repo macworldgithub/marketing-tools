@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "slug": "password-generator",
+  "siteName": "Password Generator",
+  "toolName": "Password Generator",
+  "primaryKeyword": "password generator",
+  "domain": "TODO-set-domain.com",
+  "tagline": "Generate cryptographically strong random passwords and numeric PINs locally using Web Crypto CSPRNG.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "emerald",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": [
+      "theme"
+    ]
+  }
+}

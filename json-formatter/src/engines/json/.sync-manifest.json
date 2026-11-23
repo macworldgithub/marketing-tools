@@ -1,0 +1,9 @@
+{
+  "source": "_template/engines/json",
+  "timestamp": "2026-11-23T08:01:46.157Z",
+  "files": {
+    "index.test.ts": "e37889ba9a3ddad118163d196bd8e8dfc6cb211bfd1bdd4a2c4621fdd7160f15",
+    "index.ts": "845105165b8a349f536870bfe1968076b938332b523a7196f05386e4260e3abd"
+  },
+  "aggregateHash": "990a7b5fbf0f32e1449d20850808ad3d91f4d17679199068e26df8f38c77e9a6"
+}

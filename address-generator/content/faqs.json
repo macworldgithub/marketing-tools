@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "are-generated-addresses-real-places",
+      "question": "Are generated addresses verified physical locations?",
+      "answer": "No. Addresses are assembled algorithmically from bundled geographic databases using valid postal code formats and regional naming conventions. Any coincidence with real residential or commercial premises is unintended."
+    },
+    {
+      "id": "do-us-zip-codes-match-states",
+      "question": "Do US ZIP codes correspond to the generated state?",
+      "answer": "Yes. The generator checks a state-to-ZIP prefix lookup table so that California addresses receive 90001–96162, New York gets 10001–14925, and Texas gets 75001–79999."
+    },
+    {
+      "id": "supported-international-countries",
+      "question": "Which countries are supported?",
+      "answer": "The generator supports the United States, United Kingdom (correct outward/inward postcode formats), Canada (FSA LDU pattern), Australia, and India (6-digit PIN codes)."
+    },
+    {
+      "id": "exporting-address-lists",
+      "question": "Can I export addresses to CSV or JSON?",
+      "answer": "Yes. You can instantly export up to 50 addresses at a time to comma-separated CSV or structured JSON format."
+    },
+    {
+      "id": "can-i-use-for-shipping-or-checkout",
+      "question": "Can I use these addresses for actual shipping or orders?",
+      "answer": "Strictly no. These addresses are intended solely for development testing and design mockups. Never use them for real billing, shipping, or government submissions."
+    },
+    {
+      "id": "uk-postcode-formatting-rules",
+      "question": "How are UK postcodes validated?",
+      "answer": "UK postcodes follow royal mail structural conventions consisting of an outward code area and district, followed by an inward sector and unit code (e.g., NW1 6XE)."
+    },
+    {
+      "id": "deterministic-reproducibility",
+      "question": "Can I generate consistent addresses across tests?",
+      "answer": "Yes. Supplying a numeric seed generates identical address lists across multiple browser sessions, enabling reliable test fixtures."
+    },
+    {
+      "id": "street-naming-variety",
+      "question": "What variety of street names and types are generated?",
+      "answer": "The engine combines common regional thoroughfare names with appropriate street types (Avenue, Boulevard, Road, Lane, Way, Crescent) for realistic aesthetics."
+    }
+  ]
+}

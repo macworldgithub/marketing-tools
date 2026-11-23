@@ -1,0 +1,71 @@
+{
+  "bmi-calculator": {
+    "engines": ["bmi"]
+  },
+  "age-calculator": {
+    "engines": ["age"]
+  },
+  "character-counter": {
+    "engines": ["text-stats"]
+  },
+  "gpa-calculator": {
+    "engines": ["gpa"]
+  },
+  "image-resizer": {
+    "engines": ["image-io"]
+  },
+  "loan-calculator": {
+    "engines": ["loan"]
+  },
+  "password-generator": {
+    "engines": ["password"]
+  },
+  "percentage-calculator": {
+    "engines": ["percentage"]
+  },
+  "qr-code-generator": {
+    "engines": ["qr"]
+  },
+  "background-image": {
+    "engines": ["background"]
+  },
+  "base64-encoder": {
+    "engines": ["base64"]
+  },
+  "fake-name-generator": {
+    "engines": ["fake-data"]
+  },
+  "image-compressor": {
+    "engines": ["image-io"]
+  },
+  "image-to-pdf": {
+    "engines": ["pdf"]
+  },
+  "jpg-to-png": {
+    "engines": ["image-io"]
+  },
+  "json-formatter": {
+    "engines": ["json"]
+  },
+  "lorem-ipsum-generator": {
+    "engines": ["lorem"]
+  },
+  "strong-password-generator": {
+    "engines": ["password"]
+  },
+  "address-generator": {
+    "engines": ["address"]
+  },
+  "alphabetical-order-sorter": {
+    "engines": ["sorter"]
+  },
+  "emi-calculator": {
+    "engines": ["loan"]
+  },
+  "wifi-qr-code-generator": {
+    "engines": ["qr"]
+  },
+  "word-and-character-counter": {
+    "engines": ["text-stats"]
+  }
+}

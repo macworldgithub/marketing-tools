@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "how-it-works",
+      "question": "How does this tool process data?",
+      "answer": "All computations are executed directly inside your web browser. No data is sent to our servers."
+    }
+  ]
+}
+

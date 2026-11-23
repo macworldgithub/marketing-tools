@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "slug": "json-formatter",
+  "siteName": "JSON Formatter",
+  "toolName": "JSON Formatter & Validator",
+  "primaryKeyword": "json formatter",
+  "domain": "TODO-set-domain.com",
+  "tagline": "Prettify, validate, sort keys, and repair malformed JSON with 64-bit integer preservation in your browser.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "teal",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": [
+      "theme"
+    ]
+  }
+}

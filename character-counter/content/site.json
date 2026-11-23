@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "slug": "character-counter",
+  "siteName": "Character Counter",
+  "toolName": "Character Counter",
+  "primaryKeyword": "character counter",
+  "domain": "TODO-set-domain.com",
+  "tagline": "Accurate, real-time character, word, sentence, and social media limit counter.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "slate",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": [
+      "theme"
+    ]
+  }
+}

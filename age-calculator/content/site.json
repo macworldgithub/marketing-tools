@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "slug": "age-calculator",
+  "siteName": "Age Calculator",
+  "toolName": "Age Calculator",
+  "primaryKeyword": "age calculator",
+  "domain": "TODO-set-domain.com",
+  "tagline": "Calculate exact age in years, months, days, weeks, and hours from your date of birth.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "emerald",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": [
+      "theme"
+    ]
+  }
+}

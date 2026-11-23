@@ -1,0 +1,9 @@
+{
+  "source": "_template/engines/pdf",
+  "timestamp": "2026-11-23T08:01:46.127Z",
+  "files": {
+    "index.test.ts": "d0d53139e7bd118c03fe7f0df6562a45542a94a9a9e0f1a8696e4032c32e0fd5",
+    "index.ts": "8df3ab550c7c716490c96577c14851f1055228f62cdd57a4b1e6b69b904d6aaa"
+  },
+  "aggregateHash": "5a76774d93933379518301439432928246529f46fde083c7f13cf9bc0aca8f83"
+}

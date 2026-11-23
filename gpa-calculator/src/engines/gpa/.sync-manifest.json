@@ -1,0 +1,9 @@
+{
+  "source": "_template/engines/gpa",
+  "timestamp": "2026-11-23T08:01:45.966Z",
+  "files": {
+    "index.test.ts": "76461a1b76cb122c98f1855d367dcac7682a3152a6826f1eea05bdfb131e3051",
+    "index.ts": "d8ae7b0f8217148ef9b442b00cffa456973400e14e56b8eebf59e8c18ba5b6b7"
+  },
+  "aggregateHash": "17ff654cca3365d2d05d08e5e3fe2ae5ffb807603f7aa4916a33c02730e91f13"
+}

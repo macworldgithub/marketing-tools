@@ -1,0 +1,9 @@
+{
+  "source": "_template/engines/image-io",
+  "timestamp": "2026-11-23T08:01:46.111Z",
+  "files": {
+    "index.test.ts": "aa4deea9fe8165b9214a560af244eef3868b1c7f973d4976b8f331d385dfca6f",
+    "index.ts": "1b8a66a22edf7bdc290412a7f07ecb426e58c8877ee16c0bd176c96ddce52027"
+  },
+  "aggregateHash": "84dabf45d155d28ddeb6a65f9195fc03677a5246ddbd2f037342bb3e13253cfc"
+}

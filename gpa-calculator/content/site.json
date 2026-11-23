@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "slug": "gpa-calculator",
+  "siteName": "GPA Calculator",
+  "toolName": "GPA Calculator",
+  "primaryKeyword": "gpa calculator",
+  "domain": "TODO-set-domain.com",
+  "tagline": "Calculate term and cumulative high school or college GPA on 4.0 weighted and unweighted scales.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "indigo",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": [
+      "theme"
+    ]
+  }
+}

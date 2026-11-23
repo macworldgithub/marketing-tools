@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "how-does-utf8-base64-work",
+      "question": "Why is UTF-8 safe encoding important for Base64?",
+      "answer": "Standard browser btoa() throws an exception on Unicode characters like emojis and non-Latin scripts. Our tool uses TextEncoder and TextDecoder to ensure all Unicode characters are properly preserved."
+    },
+    {
+      "id": "what-is-url-safe-base64",
+      "question": "What is URL-safe Base64 encoding?",
+      "answer": "Standard Base64 uses \"+\" and \"/\" which have reserved meanings in URL parameters. URL-safe Base64 replaces \"+\" with \"-\" and \"/\" with \"_\", and omits trailing \"=\" padding characters."
+    },
+    {
+      "id": "are-files-uploaded-to-server",
+      "question": "Are my files uploaded to a remote server when encoding?",
+      "answer": "Never. File reading and binary conversion occur entirely in your local browser memory using the FileReader and TypedArray APIs. Zero network requests are made."
+    },
+    {
+      "id": "what-is-mime-line-wrapping",
+      "question": "What does the 76-character MIME wrap option do?",
+      "answer": "The MIME standard (RFC 2045) specifies that Base64 email attachments and headers should be split into lines of at most 76 characters separated by CRLF line breaks."
+    },
+    {
+      "id": "how-to-decode-malformed-base64",
+      "question": "How does the decoder handle missing padding or URL-safe characters?",
+      "answer": "Our decoder automatically normalizes URL-safe characters and restores missing \"=\" padding before decoding, reporting clear syntax errors if invalid characters are detected."
+    },
+    {
+      "id": "data-uri-scheme-usage",
+      "question": "What is a Data URI and how can I use it in HTML?",
+      "answer": "A Data URI embeds raw file data directly into HTML or CSS (data:image/png;base64,...) eliminating extra HTTP requests for small logos or icons."
+    },
+    {
+      "id": "binary-chunking-memory",
+      "question": "How does the encoder handle large binary files without freezing?",
+      "answer": "Binary byte arrays are processed in discrete chunks of 3 bytes (yielding 4 ASCII characters), preventing memory stack overflows and browser thread locking."
+    },
+    {
+      "id": "roundtrip-decoding-guarantee",
+      "question": "Is decoded text guaranteed to match the original input byte-for-byte?",
+      "answer": "Yes. Our Base64 engine undergoes automated roundtrip property tests proving that decode(encode(x)) strictly equals x for all arbitrary Unicode strings and byte buffers."
+    }
+  ]
+}

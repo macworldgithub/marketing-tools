@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "slug": "lorem-ipsum-generator",
+  "siteName": "Lorem Ipsum Generator",
+  "toolName": "Lorem Ipsum Generator",
+  "primaryKeyword": "lorem ipsum generator",
+  "domain": "TODO-set-domain.com",
+  "tagline": "Generate exact word counts, sentences, or paragraphs of classic Latin dummy text in plain text or HTML.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "slate",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": [
+      "theme"
+    ]
+  }
+}

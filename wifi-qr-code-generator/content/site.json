@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "slug": "wifi-qr-code-generator",
+  "siteName": "Wi-Fi QR Code Generator",
+  "toolName": "Wi-Fi QR Code Generator",
+  "primaryKeyword": "wifi qr code generator",
+  "domain": "TODO-set-domain.com",
+  "tagline": "Create scannable Wi-Fi login QR codes with print-friendly cards and zero network uploads.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "slate",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": [
+      "theme"
+    ]
+  }
+}

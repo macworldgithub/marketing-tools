@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "how-does-client-side-resizing-work",
+      "question": "How are images resized without uploading to a server?",
+      "answer": "Images are decoded directly into browser memory using modern HTML5 Canvas and `createImageBitmap` APIs with high-quality bicubic resampling. The resized image is generated as a Blob in your browser, completely avoiding network uploads."
+    },
+    {
+      "id": "aspect-ratio-lock-formula",
+      "question": "How is the aspect ratio maintained when resizing?",
+      "answer": "When the ratio lock is active, changing width automatically computes height: `newH = max(1, round(newW × origH / origW))`. Conversely, altering height recalculates width proportionally."
+    },
+    {
+      "id": "supported-image-formats",
+      "question": "What image formats can I resize and export?",
+      "answer": "The resizer accepts JPEG, PNG, WebP, GIF, and BMP formats. You can export the output image as JPEG, PNG, or modern compressed WebP."
+    },
+    {
+      "id": "does-resizing-reduce-file-size",
+      "question": "Does resizing also reduce image file size?",
+      "answer": "Yes. Downscaling image resolution significantly reduces pixel count and uncompressed byte size. You can also fine-tune output JPEG/WebP quality to achieve optimal file size reduction."
+    },
+    {
+      "id": "handling-transparent-pngs",
+      "question": "What happens to transparency when converting PNG to JPEG?",
+      "answer": "JPEG does not support alpha transparency channels. When exporting transparent images to JPEG, the canvas automatically fills transparent regions with clean solid white."
+    },
+    {
+      "id": "is-there-a-maximum-file-or-resolution-limit",
+      "question": "What are the maximum resolution limits?",
+      "answer": "Most desktop browsers easily handle photos up to 50 megapixels. For mobile devices, browser canvas dimensions are safely managed to prevent memory crashes."
+    },
+    {
+      "id": "exif-and-photo-orientation",
+      "question": "Does the resizer preserve correct camera orientation?",
+      "answer": "Yes. We decode images with `{ imageOrientation: \"from-image\" }`, ensuring EXIF orientation metadata is automatically respected so your portrait or rotated photos display upright."
+    },
+    {
+      "id": "is-my-photo-private",
+      "question": "Are my personal images uploaded or logged?",
+      "answer": "No. Zero bytes of your photos leave your computer. Processing occurs entirely in client-side RAM and memory is freed immediately upon download or reset."
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "is-generated-data-real",
+      "question": "Are these names and contact details connected to real individuals?",
+      "answer": "No. All generated identities are completely fictional combinations from bundled linguistic name datasets. Any resemblance to real living or deceased persons is purely coincidental."
+    },
+    {
+      "id": "safe-phone-and-email-guarantees",
+      "question": "Why are emails and phone numbers guaranteed safe for development?",
+      "answer": "Emails are exclusively created using RFC 2606 reserved domains (example.com, example.org, example.net) which can never receive spam. US phone numbers use the fictional 555-0100 to 555-0199 test range."
+    },
+    {
+      "id": "government-ids-policy",
+      "question": "Does this tool generate Social Security numbers, credit cards, or passports?",
+      "answer": "Strictly no. To prevent misuse, this utility never generates government identification numbers, financial credentials, or private citizen records."
+    },
+    {
+      "id": "export-formats",
+      "question": "How can I export generated names for database seeding?",
+      "answer": "You can instantly copy data to your clipboard or download clean CSV and structured JSON files compatible with mock APIs and database seeding scripts."
+    },
+    {
+      "id": "reproducible-seed-generation",
+      "question": "Can I generate the same set of test users across multiple runs?",
+      "answer": "Yes. By entering an optional numeric Seed value, the deterministic pseudorandom number generator produces the exact same sequence of names across test sessions."
+    },
+    {
+      "id": "demographic-localization",
+      "question": "How are culturally accurate names selected for each country?",
+      "answer": "The engine bundles curated dictionaries of over 200 first names and 200 family surnames for each supported country: US, UK, India, Pakistan, Canada, and Australia."
+    },
+    {
+      "id": "gender-filtering-options",
+      "question": "Can I filter identities by gender?",
+      "answer": "Yes. You can select Male, Female, or Random to match the demographic requirements of your mock application or persona testing."
+    },
+    {
+      "id": "date-of-birth-ranges",
+      "question": "What age brackets are used for simulated birth dates?",
+      "answer": "Dates of birth are generated within realistic adult ranges (ages 18 to 75) formatted as ISO 8601 YYYY-MM-DD strings."
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "name": "tools-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "23 standalone, frontend-only tool websites",
+  "scripts": {
+    "sync": "tsx scripts/sync.ts",
+    "check-sync": "tsx scripts/check-sync.ts",
+    "validate-all": "tsx scripts/validate-all.ts",
+    "verify-standalone": "tsx scripts/verify-standalone.ts",
+    "each": "tsx scripts/each.ts",
+    "new-site": "tsx scripts/new-site.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.0",
+    "playwright": "^1.65.1",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "zod": "^4.6.7"
+  }
+}

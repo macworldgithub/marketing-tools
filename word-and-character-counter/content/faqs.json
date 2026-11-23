@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "how-are-reading-and-speaking-times-estimated",
+      "question": "How are reading and speaking durations calculated?",
+      "answer": "Silent reading speed is computed at 238 words per minute (standard collegiate benchmark), while conversational speaking time is calculated at 150 words per minute."
+    },
+    {
+      "id": "keyword-density-and-stop-words",
+      "question": "What is keyword density and how does the stop-word filter work?",
+      "answer": "Keyword density measures the percentage frequency of a word relative to total text words. Enabling the stop-word filter excludes common functional words (such as \"the\", \"and\", \"is\") to reveal primary topical keywords."
+    },
+    {
+      "id": "grapheme-cluster-character-counting",
+      "question": "How are compound emojis and accented characters counted?",
+      "answer": "Characters are evaluated using Intl.Segmenter grapheme clusters so that multi-codepoint emojis (like 👨‍👩‍👧‍👦) and combining accent sequences count accurately as single characters."
+    },
+    {
+      "id": "hyphenated-words-rule",
+      "question": "Are hyphen-joined words counted as one word or two?",
+      "answer": "Hyphenated words (such as \"well-known\") are counted as a single word token, matching standard Microsoft Word and Google Docs conventions."
+    },
+    {
+      "id": "performance-on-large-manuscripts",
+      "question": "Can this tool handle entire novels or essays over 100,000 words?",
+      "answer": "Yes. Text segmentation runs via optimized native Web APIs in linear O(n) time, analyzing large manuscripts within milliseconds without browser freezing."
+    },
+    {
+      "id": "sentence-segmentation-rules",
+      "question": "How are sentence boundaries identified?",
+      "answer": "Sentence segmentation relies on international linguistic rules via Intl.Segmenter, treating abbreviations and introductory interjections (< 3 words) with proper contextual grouping."
+    },
+    {
+      "id": "character-counts-with-vs-without-spaces",
+      "question": "Why do character tallies differ when whitespace is excluded?",
+      "answer": "The total character metric tallies every grapheme cluster including space characters, tabs, and line returns. The characters without spaces metric strips all Unicode whitespace codepoints to reflect printable prose density."
+    },
+    {
+      "id": "browser-privacy-for-drafts",
+      "question": "Is my unpublished writing safe from cloud logging?",
+      "answer": "Completely safe. The entire counting engine runs strictly within your browser sandbox. No text is ever uploaded to a server, logged, or indexed."
+    }
+  ]
+}

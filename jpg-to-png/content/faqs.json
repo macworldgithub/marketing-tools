@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "does-converting-jpg-to-png-improve-quality",
+      "question": "Does converting JPG to PNG improve image quality?",
+      "answer": "No. While PNG is a lossless format, converting an existing JPG cannot restore compression artifacts or visual details that JPEG lossy compression already discarded."
+    },
+    {
+      "id": "why-are-png-files-larger",
+      "question": "Why are converted PNG files often larger than the original JPG?",
+      "answer": "PNG uses lossless DEFLATE compression which preserves exact pixel color values, whereas JPEG uses lossy discrete cosine transform. Consequently, converted PNG files are almost always larger."
+    },
+    {
+      "id": "batch-conversion-and-zip",
+      "question": "Can I convert multiple JPGs and download them as a ZIP archive?",
+      "answer": "Yes. You can select multiple images to convert them in batch, downloading them individually or bundled together in a ZIP file."
+    },
+    {
+      "id": "privacy-guarantee",
+      "question": "Are my images uploaded to any remote server?",
+      "answer": "No. The conversion is performed locally via your browser HTML5 Canvas. No image data is ever uploaded or transmitted."
+    },
+    {
+      "id": "supported-input-formats",
+      "question": "Can I convert other formats to PNG?",
+      "answer": "Yes. The converter accepts JPG, JPEG, WebP, and BMP files and converts them all into standard lossless PNG."
+    },
+    {
+      "id": "lossless-compression-algorithm",
+      "question": "How does the PNG format compress image data?",
+      "answer": "PNG uses LZ77-derived DEFLATE compression paired with predictive horizontal/vertical byte filters to pack repeated color runs without discarding data."
+    },
+    {
+      "id": "transparency-support",
+      "question": "Does converting JPG to PNG add a transparent background?",
+      "answer": "Converting JPG creates an opaque PNG since JPEGs contain no alpha channel. To add transparency, pixels must be edited or keyed out separately."
+    },
+    {
+      "id": "when-to-use-png-over-jpg",
+      "question": "When is PNG preferred over JPG for graphics?",
+      "answer": "PNG is ideal for digital illustrations, screenshots, UI diagrams, and typography where sharp edge definitions and color consistency are essential."
+    }
+  ]
+}

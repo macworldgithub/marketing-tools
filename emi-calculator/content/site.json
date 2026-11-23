@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "slug": "emi-calculator",
+  "siteName": "EMI Calculator",
+  "toolName": "EMI Calculator",
+  "primaryKeyword": "emi calculator",
+  "domain": "TODO-set-domain.com",
+  "tagline": "Calculate Equated Monthly Installments for home, car, and personal loans with reducing-balance and flat-rate modes.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "emerald",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": [
+      "theme"
+    ]
+  }
+}

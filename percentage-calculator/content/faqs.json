@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "how-do-you-calculate-percent-of-a-number",
+      "question": "How do you calculate the percentage of a number?",
+      "answer": "To find X% of Y, convert the percentage into a decimal by dividing by 100, then multiply by the total: `Result = Y × (X / 100)`. For example, 15% of 200 = `200 × 0.15 = 30`."
+    },
+    {
+      "id": "how-to-find-what-percent-one-number-is-of-another",
+      "question": "How do you find what percent X is of Y?",
+      "answer": "Divide the part X by the whole Y and multiply by 100: `(X / Y) × 100`. For example, 30 is what percent of 200? `(30 / 200) × 100 = 15%`."
+    },
+    {
+      "id": "percentage-change-vs-percentage-difference",
+      "question": "What is the difference between percentage change and percentage difference?",
+      "answer": "Percentage change has direction (increase or decrease) relative to an initial value A: `((B - A) / |A|) × 100`. Percentage difference is symmetric and compares two values relative to their average: `(|A - B| / ((A + B) / 2)) × 100`."
+    },
+    {
+      "id": "percentage-increase-decrease-formula",
+      "question": "How do you calculate a percentage increase or decrease?",
+      "answer": "Multiply the base number Y by `(1 + X/100)` for an increase, or by `(1 - X/100)` for a decrease. For example, increasing 200 by 15% yields `200 × 1.15 = 230`."
+    },
+    {
+      "id": "why-are-floating-point-errors-prevented",
+      "question": "Why does this tool prevent rounding artifacts like 0.1 + 0.2 = 0.30000000000000004?",
+      "answer": "Computers use binary floating-point representation that cannot represent fractions like 1/10 exactly. We use arbitrary-precision `decimal.js` arithmetic to guarantee exact decimal outputs."
+    },
+    {
+      "id": "are-my-numbers-sent-to-any-server",
+      "question": "Are my numbers or calculations sent to a server?",
+      "answer": "No. All percentage math runs 100% locally in your web browser. No numbers, formulas, or results are logged or transmitted."
+    },
+    {
+      "id": "can-percentages-be-negative-or-greater-than-100",
+      "question": "Can percentages be negative or exceed 100%?",
+      "answer": "Yes. If a final value is smaller than an initial value, percentage change is negative (a percentage decrease). Percentages over 100% represent quantities greater than the original base."
+    },
+    {
+      "id": "worked-sentence-explanations",
+      "question": "What are the worked sentences displayed under each panel?",
+      "answer": "Every panel displays the plain English sentence and underlying mathematical formula so you can verify the steps for academic, business, or retail calculations."
+    }
+  ]
+}

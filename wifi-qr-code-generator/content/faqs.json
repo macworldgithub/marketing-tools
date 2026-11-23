@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "how-do-wifi-qr-codes-work",
+      "question": "How do Wi-Fi QR codes connect devices automatically?",
+      "answer": "The QR code encodes a standard ZXing Wi-Fi configuration payload (WIFI:T:...;S:...;P:...;;). When scanned with iOS Camera or Android, the device automatically parses the SSID and credentials to connect."
+    },
+    {
+      "id": "is-my-password-stored-or-transmitted",
+      "question": "Is my network password saved or sent over the internet?",
+      "answer": "Never. The QR code is generated 100% locally in your web browser. Note, however, that anyone who physically scans the code can view your network password in plain text."
+    },
+    {
+      "id": "escaping-special-characters",
+      "question": "How are special characters in SSIDs and passwords handled?",
+      "answer": "In accordance with the ZXing Wi-Fi QR specification, characters including colons, semicolons, commas, and backslashes are escaped with a preceding backslash."
+    },
+    {
+      "id": "print-friendly-wifi-cards",
+      "question": "Can I print a guest Wi-Fi card to display?",
+      "answer": "Yes. Use the \"Print Guest Card\" button to trigger a clean printable layout formatted specifically for tabletop or wall display."
+    },
+    {
+      "id": "hidden-networks-support",
+      "question": "Does this work for hidden Wi-Fi networks?",
+      "answer": "Yes. Enabling the \"Hidden Network\" checkbox appends H:true to the configuration payload so devices scan for non-broadcasting SSIDs."
+    },
+    {
+      "id": "wpa3-and-wpa2-compatibility",
+      "question": "Are modern WPA3 networks supported?",
+      "answer": "Yes. Modern mobile operating systems recognize the standard T:WPA token for all WPA, WPA2, and WPA3 Personal networks."
+    },
+    {
+      "id": "open-unencrypted-networks",
+      "question": "Can I generate a QR code for open networks without a password?",
+      "answer": "Yes. Selecting the \"None / Open\" security option omits the password field and sets T:nopass, allowing guests to join open Wi-Fi with one tap."
+    },
+    {
+      "id": "vector-svg-vs-png-export",
+      "question": "What is the advantage of downloading SVG over PNG?",
+      "answer": "SVG is an infinitely scalable vector format that ensures sharp, pixel-perfect printing on posters and signage at any physical print size."
+    }
+  ]
+}

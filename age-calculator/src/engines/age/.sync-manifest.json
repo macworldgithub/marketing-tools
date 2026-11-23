@@ -1,0 +1,9 @@
+{
+  "source": "_template/engines/age",
+  "timestamp": "2026-11-23T08:01:45.934Z",
+  "files": {
+    "index.test.ts": "1c06b57515b78307f7f4c95f54fd5119c451854eed168ac2c199615454a10ce0",
+    "index.ts": "b5e100ab3764ac5f5afa267a65b690501eecec6a0d295e04b4b29805cb8f69a5"
+  },
+  "aggregateHash": "b93448a9f1cb785c20d09ec2b02c54c8e7c4cb6b80385e50bf6ca05df8d54c3a"
+}

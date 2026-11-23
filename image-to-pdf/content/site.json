@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "slug": "image-to-pdf",
+  "siteName": "Image to PDF Converter",
+  "toolName": "Image to PDF Converter",
+  "primaryKeyword": "image to pdf",
+  "domain": "TODO-set-domain.com",
+  "tagline": "Combine and convert multiple images into a clean PDF document with custom margins and page sizes.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "indigo",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": [
+      "theme"
+    ]
+  }
+}

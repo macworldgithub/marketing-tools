@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "how-are-bigints-preserved",
+      "question": "How does this tool prevent large numbers and decimals from losing precision?",
+      "answer": "Standard JSON.parse in JavaScript rounds numbers exceeding 53 bits (Number.MAX_SAFE_INTEGER). Our tool uses lossless-json to preserve 64-bit integer strings and decimal accuracy exactly."
+    },
+    {
+      "id": "how-does-json-repair-work",
+      "question": "What does the \"Try to Repair\" action fix?",
+      "answer": "The repair tool resolves common syntax oversights including trailing commas, single-quoted strings, unquoted object keys, and unescaped characters using jsonrepair."
+    },
+    {
+      "id": "error-line-and-column-reporting",
+      "question": "How are syntax error locations reported?",
+      "answer": "When validation detects a syntax error, the tool calculates the 1-based line and column coordinates so you can jump directly to the invalid character."
+    },
+    {
+      "id": "key-sorting-mechanism",
+      "question": "Does key sorting apply to nested objects?",
+      "answer": "Yes. Enabling key sorting recursively orders all object keys alphabetically across all nested levels while leaving arrays in their original order."
+    },
+    {
+      "id": "is-my-json-data-private",
+      "question": "Is my data transmitted or stored anywhere?",
+      "answer": "Never. All parsing, validation, formatting, and repair algorithms execute 100% locally in your client environment."
+    },
+    {
+      "id": "indentation-options",
+      "question": "What indentation options can I choose?",
+      "answer": "You can format JSON with 2 spaces (standard web convention), 4 spaces (backend convention), or Tab characters for accessibility."
+    },
+    {
+      "id": "minification-savings",
+      "question": "What does the Minify option do?",
+      "answer": "Minifying strips all non-essential whitespace, line breaks, and indentation, significantly decreasing payload byte sizes for production APIs."
+    },
+    {
+      "id": "handling-large-payloads",
+      "question": "Can the tool format multi-megabyte JSON payloads?",
+      "answer": "Yes. The lossless parser handles large structures efficiently without blocking main rendering loops."
+    }
+  ]
+}

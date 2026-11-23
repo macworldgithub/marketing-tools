@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "how-are-characters-counted",
+      "question": "How does this tool accurately count Unicode characters and emoji?",
+      "answer": "We use the standard `Intl.Segmenter` API with grapheme clustering. Unlike primitive `string.length` counting which splits surrogate pairs, complex emoji sequences (such as 👨‍👩‍👧‍👦 or flag emoji) are accurately counted as single visible characters."
+    },
+    {
+      "id": "difference-with-and-without-spaces",
+      "question": "What is the difference between characters with and without spaces?",
+      "answer": "Characters with spaces counts every visible grapheme plus tabs, spaces, and line breaks. Characters without spaces strips all Unicode whitespace (including non-breaking spaces and line returns) before counting."
+    },
+    {
+      "id": "social-media-platform-limits",
+      "question": "What platform limits are checked?",
+      "answer": "The tool actively checks limits for X/Twitter (280 chars), SMS text messages (160 characters for standard GSM-7 or 70 for Unicode), SEO Meta Titles (60 chars), Meta Descriptions (160 chars), and Instagram Bios (150 chars)."
+    },
+    {
+      "id": "is-my-text-sent-to-a-server",
+      "question": "Is my text transmitted or stored on your servers?",
+      "answer": "No. All text parsing, grapheme segmentation, and keyword statistics happen entirely within your local browser sandbox. Nothing you type or paste is transmitted over the network."
+    },
+    {
+      "id": "how-is-reading-time-calculated",
+      "question": "How is reading and speaking time estimated?",
+      "answer": "Reading time is computed at the standard research average of 238 words per minute. Speaking time is estimated at 150 words per minute, typical for presentations and voiceovers."
+    },
+    {
+      "id": "what-counts-as-a-word",
+      "question": "How does the word counter define a word?",
+      "answer": "In line with Microsoft Word and Google Docs conventions, words are defined as whitespace-separated tokens containing at least one Unicode letter (\\p{L}) or number (\\p{N}). Hyphenated terms like \"well-known\" count as a single word."
+    },
+    {
+      "id": "performance-on-large-texts",
+      "question": "Can this tool handle large documents without freezing?",
+      "answer": "Yes. The algorithm handles multi-megabyte texts efficiently with optimized single-pass linear regex and segmenter execution."
+    },
+    {
+      "id": "how-are-sentences-and-paragraphs-counted",
+      "question": "How are sentences and paragraphs counted?",
+      "answer": "Sentences are parsed via grammatical sentence segmenters. Paragraphs are identified as text blocks separated by one or more blank line returns."
+    }
+  ]
+}

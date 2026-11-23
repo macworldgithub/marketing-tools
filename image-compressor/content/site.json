@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "slug": "image-compressor",
+  "siteName": "Image Compressor",
+  "toolName": "Image Compressor",
+  "primaryKeyword": "image compressor",
+  "domain": "TODO-set-domain.com",
+  "tagline": "Compress JPEG, PNG, and WebP images client-side with instant before and after size comparison.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "emerald",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": [
+      "theme"
+    ]
+  }
+}

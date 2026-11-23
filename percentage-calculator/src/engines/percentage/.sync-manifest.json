@@ -1,0 +1,9 @@
+{
+  "source": "_template/engines/percentage",
+  "timestamp": "2026-11-23T08:01:46.028Z",
+  "files": {
+    "index.test.ts": "1c0c19f1676e101eeb0fb7741089db1befea8b821ef47f2b9e068017ee525b1e",
+    "index.ts": "20b1588f8d1d4e0b250f9600cc0fae2331154a000c1b127fee28c3c35be563dc"
+  },
+  "aggregateHash": "330d5c7a78c8e1625aa475dd25e0094dc162031088136841ccdb70838a303213"
+}

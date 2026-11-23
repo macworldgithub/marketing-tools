@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "slug": "percentage-calculator",
+  "siteName": "Percentage Calculator",
+  "toolName": "Percentage Calculator",
+  "primaryKeyword": "percentage calculator",
+  "domain": "TODO-set-domain.com",
+  "tagline": "Instant, exact decimal percentage calculator for percent of, percentage change, increase, and difference.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "indigo",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": [
+      "theme"
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "slug": "background-image",
+  "siteName": "Background Image",
+  "toolName": "Background Image",
+  "primaryKeyword": "background image",
+  "domain": "TODO-set-domain.com",
+  "tagline": "Fast and reliable background image running completely in your browser.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "blue",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": [
+      "theme"
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "how-is-monthly-payment-calculated",
+      "question": "What mathematical formula calculates the monthly loan payment?",
+      "answer": "Monthly payment is calculated using the standard amortized loan formula: `P × [r(1+r)^n] / [(1+r)^n − 1]`, where `P` is principal loan amount, `r` is periodic monthly interest rate (`APR / 12 / 100`), and `n` is total number of monthly payments."
+    },
+    {
+      "id": "how-extra-payments-save-interest",
+      "question": "How do extra monthly payments accelerate payoff and save interest?",
+      "answer": "Any extra principal paid each month directly reduces the remaining loan balance. Because subsequent monthly interest is computed strictly against the remaining balance (`balance × r`), future interest charges decrease, shortening loan term."
+    },
+    {
+      "id": "why-totals-sum-the-schedule",
+      "question": "Why are headline totals calculated from schedule sums rather than simple multiplication?",
+      "answer": "In real-world lending, each period rounded interest and principal must sum to exact currency cents. Consequently, the final payment adjusts for cent rounding, and total interest is the exact sum of all scheduled periods."
+    },
+    {
+      "id": "zero-interest-loan-handling",
+      "question": "How does the calculator handle 0% APR loans?",
+      "answer": "If the interest rate is 0%, the formula cleanly evaluates to `Principal / Months`, resulting in zero interest charges and equal payments."
+    },
+    {
+      "id": "is-my-financial-data-secure",
+      "question": "Is my financial information or loan amount private?",
+      "answer": "Yes. All financial calculations occur 100% locally in your browser session. No loan values, interest rates, or schedules are ever transmitted or saved."
+    },
+    {
+      "id": "can-i-export-the-amortization-schedule",
+      "question": "Can I export the amortization schedule?",
+      "answer": "Yes. You can download the full monthly breakdown of principal, interest, and remaining balance as a standard CSV file directly from the page."
+    },
+    {
+      "id": "difference-between-apr-and-interest-rate",
+      "question": "What is the difference between interest rate and APR?",
+      "answer": "The interest rate reflects the cost of borrowing the principal balance. Annual Percentage Rate (APR) incorporates the interest rate plus any mandatory lender fees or points expressed on an annualized basis."
+    },
+    {
+      "id": "financial-disclaimer",
+      "question": "Is this calculation a guaranteed loan offer or advice?",
+      "answer": "No. This calculator is provided for informational and educational planning purposes only. Lenders may calculate daily interest accrual or apply proprietary closing charges."
+    }
+  ]
+}

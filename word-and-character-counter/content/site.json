@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "slug": "word-and-character-counter",
+  "siteName": "Word and Character Counter",
+  "toolName": "Word and Character Counter",
+  "primaryKeyword": "word and character counter",
+  "domain": "TODO-set-domain.com",
+  "tagline": "Comprehensive text analytics with word counts, reading and speaking times, and top keyword density analysis.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "indigo",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": [
+      "theme"
+    ]
+  }
+}

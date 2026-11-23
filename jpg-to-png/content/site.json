@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "slug": "jpg-to-png",
+  "siteName": "JPG to PNG Converter",
+  "toolName": "JPG to PNG Converter",
+  "primaryKeyword": "jpg to png",
+  "domain": "TODO-set-domain.com",
+  "tagline": "Losslessly convert JPG images to PNG format directly in your browser with zero server uploads.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "blue",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": [
+      "theme"
+    ]
+  }
+}

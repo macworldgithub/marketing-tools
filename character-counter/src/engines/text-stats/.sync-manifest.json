@@ -1,0 +1,9 @@
+{
+  "source": "_template/engines/text-stats",
+  "timestamp": "2026-11-23T08:01:45.950Z",
+  "files": {
+    "index.test.ts": "1ee84fd1ace3c55c6d5c70b239101157fed96e7d952f68ac7cb5bc3eee27ef34",
+    "index.ts": "e11caca50281e6f45bc39f23234bcac8d4eed77ab1ac836269d535cc0d9f0217"
+  },
+  "aggregateHash": "a7d7d3c6d6c066d0bdae38318f464738990dbf4a653ebc94cf1be52e76bc05b5"
+}

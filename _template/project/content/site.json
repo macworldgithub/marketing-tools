@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "slug": "template-slug",
+  "siteName": "Template Tool",
+  "toolName": "Template Tool",
+  "primaryKeyword": "template tool",
+  "domain": "TODO-set-domain.com",
+  "tagline": "A fast, privacy-focused browser utility.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "blue",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": ["theme"]
+  }
+}
+

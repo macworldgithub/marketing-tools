@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "slug": "alphabetical-order-sorter",
+  "siteName": "Alphabetical Order Sorter",
+  "toolName": "Alphabetical Order Sorter",
+  "primaryKeyword": "alphabetical order sorter",
+  "domain": "TODO-set-domain.com",
+  "tagline": "Sort lists alphabetically, numerically, or by last word with delimiter controls and duplicate removal.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "blue",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": [
+      "theme"
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "how-is-password-entropy-calculated",
+      "question": "How is password entropy measured?",
+      "answer": "Entropy is calculated as Length × log2(Pool Size). A 20-character password spanning all 94 ASCII characters provides over 131 bits of generation entropy, rendering brute-force attacks mathematically impossible."
+    },
+    {
+      "id": "passphrase-vs-random-password",
+      "question": "Why choose a multi-word passphrase over random characters?",
+      "answer": "Passphrases combine high entropy with human memorability. A 5-word passphrase drawn from a standard dictionary offers over 64 bits of entropy while remaining easy to type without transcription errors."
+    },
+    {
+      "id": "cryptographic-randomness-guarantee",
+      "question": "How is cryptographically secure randomness guaranteed?",
+      "answer": "Randomness is sourced exclusively from the browser crypto.getRandomValues API with rejection sampling to eliminate modulo bias. Math.random is strictly forbidden."
+    },
+    {
+      "id": "are-passwords-stored-or-logged",
+      "question": "Are generated passwords saved or logged in any way?",
+      "answer": "Never. Passwords exist only in active browser memory and disappear when the page is refreshed. Nothing is ever sent to a server."
+    },
+    {
+      "id": "ambiguous-character-exclusion",
+      "question": "What does the ambiguous character exclusion option do?",
+      "answer": "Excluding ambiguous characters removes visually confusing glyphs such as uppercase I, lowercase l, numeral 1, uppercase O, and numeral 0 to prevent transcription mistakes."
+    },
+    {
+      "id": "character-class-guarantee",
+      "question": "Does every generated password include characters from every selected set?",
+      "answer": "Yes. The algorithm guarantees that at least one character from each selected class (uppercase, lowercase, number, symbol) is present, shuffled randomly via Fisher-Yates."
+    },
+    {
+      "id": "eff-wordlist-standard",
+      "question": "What dictionary powers the passphrase generator?",
+      "answer": "Passphrases utilize curated wordlists inspired by the Electronic Frontier Foundation (EFF) large wordlist, ensuring words are distinct, easy to spell, and free from offensive terms."
+    },
+    {
+      "id": "brute-force-resistance",
+      "question": "How long would it take a supercomputer to crack a 100-bit password?",
+      "answer": "Cracking a 100-bit password would require testing 2^100 combinations, a computational task that would take billions of years using all combined supercomputers on Earth."
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "slug": "address-generator",
+  "siteName": "Address Generator",
+  "toolName": "Address Generator",
+  "primaryKeyword": "address generator",
+  "domain": "TODO-set-domain.com",
+  "tagline": "Generate formatted placeholder addresses with valid regional postal code ranges for software testing and UI mockups.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "teal",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": [
+      "theme"
+    ]
+  }
+}

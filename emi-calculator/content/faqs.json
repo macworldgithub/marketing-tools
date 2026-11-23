@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "how-is-reducing-balance-emi-calculated",
+      "question": "How is reducing-balance EMI calculated?",
+      "answer": "Reducing-balance EMI uses the standard financial formula: EMI = [P × r × (1+r)^n] / [(1+r)^n - 1], where P is principal, r is the monthly interest rate (annual rate / 12 / 100), and n is the tenure in months."
+    },
+    {
+      "id": "reducing-balance-vs-flat-rate",
+      "question": "What is the difference between reducing balance and flat rate?",
+      "answer": "In flat-rate loans, interest is charged on the original principal for the entire loan duration, resulting in a substantially higher effective interest cost compared to a reducing-balance loan of the same nominal rate."
+    },
+    {
+      "id": "indian-number-system-lakh-crore",
+      "question": "How does the Indian Lakh / Crore numbering system work?",
+      "answer": "When Indian Rupee (INR) is selected, figures are grouped in the South Asian format: 1,00,000 (1 Lakh) and 1,00,00,000 (1 Crore) using the en-IN formatting locale."
+    },
+    {
+      "id": "can-i-download-the-schedule",
+      "question": "Can I download the month-by-month repayment schedule?",
+      "answer": "Yes. You can export the complete repayment schedule as a CSV spreadsheet detailing principal, interest, and outstanding balance for every installment."
+    },
+    {
+      "id": "zero-interest-emi",
+      "question": "Does this calculator support 0% interest no-cost EMIs?",
+      "answer": "Yes. If the interest rate is set to 0%, the monthly EMI simplifies exactly to Principal divided by tenure without division-by-zero errors."
+    },
+    {
+      "id": "final-installment-rounding-adjustment",
+      "question": "Why is the final monthly EMI sometimes a few cents different?",
+      "answer": "Because monthly payments are rounded to two decimal places, small fractional cent differences accumulate over decades. The final payment is adjusted to settle the remaining balance to exactly zero."
+    },
+    {
+      "id": "principal-vs-interest-breakdown",
+      "question": "How does the principal-to-interest ratio change over time?",
+      "answer": "Early payments consist primarily of interest charges because the outstanding principal balance is at its highest. As principal is paid down, subsequent interest charges shrink steadily."
+    },
+    {
+      "id": "arbitrary-precision-arithmetic",
+      "question": "How does this tool eliminate financial rounding errors?",
+      "answer": "Every calculation is processed using decimal.js with half-up rounding, eliminating IEEE 754 floating point arithmetic inaccuracies."
+    }
+  ]
+}

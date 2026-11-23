@@ -1,0 +1,28 @@
+{
+  "source": "_template/core",
+  "timestamp": "2026-11-23T08:01:46.187Z",
+  "files": {
+    "components/Breadcrumbs.tsx": "d9f50910b146d89a8c82ec4e8b3943cb053c51ee41bc9ab8d31b61a4da1edbfd",
+    "components/FAQAccordion.tsx": "9084cb32c97b636bf85fbd8af031eb3f732a48dc07a96d5044b87049bfa8a704",
+    "components/Footer.tsx": "a375a877e1c54bde0dbd9b6097015a98ea4e32ca4f36d56f073e8472a5ec5d10",
+    "components/Header.tsx": "939d6001ea8b4e449e1fab9f9350dacdabf2bc9e06b8d8ba7233baac9b79e17e",
+    "components/LayoutShell.tsx": "d23bb0bc0d1121a055c65d92f1315bc21d7ce273b4cf90027f95a35573ad975e",
+    "components/LegalRenderer.tsx": "f430b09f2fa7904e0b8d10b1fb87622cb9a1e345a42a54176135e811bf09ec49",
+    "components/MarkdownContent.tsx": "8155c5eea7e00f1d5af2d922a7aa4e4eba293185738331d9613cc62c5a6026c2",
+    "components/SEOMetadata.tsx": "390145d56188fade358c549654a62165366efec88f6861111531c1f39a291f1b",
+    "components/ThemeToggle.tsx": "8bd0791b025b6f26e3fb11e461284e5d39b5896c4374917e96af9779f08a7c70",
+    "content/legal-template.test.ts": "6e6b5d1a5a5768f65052f560b8c651b0a8a48cc41dee7fb2dba6de5cfef91e76",
+    "content/legal-template.ts": "e1345848dcc627054481243f43960e4974698b1218dfffacccfa8245508dcff9",
+    "content/loader.ts": "3dfdd6bb863952dfee74a050aa9edd5ed26393df0ddd771930df416d13eb0821",
+    "content/types.ts": "d413596aedd089149f6393543b31c92c6291aca0faf756ac68797abd36a2e6b9",
+    "content/validator.test.ts": "a6392acab46eb1809b0c360e636258145da22babbc8c84d8c180d0187601772d",
+    "content/validator.ts": "3ba3e0b3366acc2f824a2aaa775c0050ff5226293d8c713ba9d56238fd9d6f83",
+    "preview/PreviewClient.test.ts": "2f829c9a245ac0b4fb45d7a5bb97745f58ed64db481da648fc6eed5be639136d",
+    "preview/PreviewClient.tsx": "ae131678005a4d89c4a2c0c8b421632e9f72e0f81b8d9435a0572ebed1169c41",
+    "preview/types.ts": "f862f510ef734162fb7014b34e5cc3afddfeed2139f181b68d50eb2b6d6ceac2",
+    "utils/cn.ts": "cfdbac88fedc7f58710dc76791af574e68571220fdd0369cce30412b0923ae87",
+    "utils/csp.ts": "cbeb11949672453f1e9bd7417fb8d6d83ba0eda3a7e7be85af8e239bd9edb314",
+    "utils/sanitize.ts": "6d4e9bff864d656effc395fd4c4420a0ebaaa0cdd36d37b17b936efe231719bd"
+  },
+  "aggregateHash": "3f30cd7ac4db76981f751f3dc728e36fa09faf4f6414287870987dd0de19213a"
+}

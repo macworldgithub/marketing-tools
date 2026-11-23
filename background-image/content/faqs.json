@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "how-are-backgrounds-generated",
+      "question": "How are backgrounds generated without a server or stock photos?",
+      "answer": "All graphics, mathematical gradients, and geometric patterns are synthesized on an HTML5 Canvas directly in your web browser. Nothing is fetched from or sent to a remote server."
+    },
+    {
+      "id": "supported-resolutions",
+      "question": "What image resolutions and aspect ratios can I export?",
+      "answer": "Standard presets include Full HD (1920x1080), 2K QHD (2560x1440), 4K UHD (3840x2160), Mobile Portrait (1080x1920), and 720p HD. You can also define custom canvas dimensions up to 8192 pixels."
+    },
+    {
+      "id": "css-gradient-code",
+      "question": "Can I copy the CSS code for web design?",
+      "answer": "Yes. Whenever you design a linear or radial gradient, the exact CSS rule is generated with angle and color stops ready to copy into your stylesheet."
+    },
+    {
+      "id": "image-overlay-blur-privacy",
+      "question": "Is my uploaded photo kept private when creating a blurred wallpaper?",
+      "answer": "Completely private. When you upload a picture, it is loaded into your browser memory via createImageBitmap. No bytes ever leave your device."
+    },
+    {
+      "id": "file-formats-available",
+      "question": "Which file formats can I download?",
+      "answer": "You can export high-quality PNG for lossless graphics, JPEG with clean background rendering, or modern WebP."
+    },
+    {
+      "id": "conic-and-radial-gradients",
+      "question": "How do radial gradients adapt to widescreen displays?",
+      "answer": "Radial gradients compute center coordinates and maximum ellipse radiuses dynamically based on your chosen canvas aspect ratio to ensure uniform color spreading."
+    },
+    {
+      "id": "pattern-density-scaling",
+      "question": "How does geometric pattern scaling work?",
+      "answer": "You can adjust grid, dot, or stripe step sizes from 10 to 100 pixels with adjustable opacity overlays, enabling subtle textural depth without overwhelming UI elements."
+    },
+    {
+      "id": "performance-on-4k-displays",
+      "question": "Will generating 4K wallpapers slow down my computer?",
+      "answer": "Canvas operations utilize hardware-accelerated rendering through your graphics card, making 4K rasterization nearly instantaneous while consuming minimal memory."
+    }
+  ]
+}

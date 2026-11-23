@@ -1,0 +1,9 @@
+{
+  "source": "_template/engines/background",
+  "timestamp": "2026-11-23T08:01:46.064Z",
+  "files": {
+    "index.test.ts": "d7a468410974cccf04da558b7e255c69340ad7818481d392a3a43240ad95bf67",
+    "index.ts": "b1aff0cfd34b502d1aa2885a9cfb3aef9532b0f4cf2fb335be6c154c93b8db5a"
+  },
+  "aggregateHash": "1de4b9c3148c24f75c173a9ca421bfe5d4d9c86a113b9976088ba61528b68c3f"
+}

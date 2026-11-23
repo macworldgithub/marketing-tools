@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "how-does-client-side-compression-work",
+      "question": "How does client-side image compression work without server uploads?",
+      "answer": "Images are drawn to an HTML5 Canvas using createImageBitmap and re-encoded directly in browser memory at your designated quality setting. Zero bytes are uploaded to any server."
+    },
+    {
+      "id": "why-are-exif-metadata-stripped",
+      "question": "Are EXIF metadata and GPS locations stripped during compression?",
+      "answer": "Yes. Drawing an image to a canvas naturally strips all EXIF metadata, camera settings, and geolocation tags, enhancing privacy while reducing file weight."
+    },
+    {
+      "id": "what-happens-if-compressed-file-is-larger",
+      "question": "What happens if the compressed result is larger than the original?",
+      "answer": "If re-encoding does not yield a smaller file size (common when attempting to re-compress already heavily optimized files), the tool automatically preserves your original file and alerts you."
+    },
+    {
+      "id": "which-formats-supported",
+      "question": "Which image formats are supported for compression?",
+      "answer": "JPEG, WebP, and PNG images are supported. You can re-encode JPEGs and WebPs with custom quality factors or convert PNGs to modern WebP."
+    },
+    {
+      "id": "batch-compression-support",
+      "question": "Can I compress multiple images at once?",
+      "answer": "Yes. You can drag and drop multiple files to compress them simultaneously and download them individually or as a ZIP archive."
+    },
+    {
+      "id": "quality-slider-guidelines",
+      "question": "What quality setting offers the best balance of file size and visual fidelity?",
+      "answer": "A quality factor between 0.70 and 0.80 typically reduces JPEG and WebP file weight by 60% to 80% with virtually imperceptible visual compression artifacts on web screens."
+    },
+    {
+      "id": "dimension-clamping-benefits",
+      "question": "Why should I set a maximum pixel dimension?",
+      "answer": "Modern smartphone cameras capture images at 4000+ pixels wide. Constraining resolution to 1920 or 2048 pixels yields dramatic file size reductions before compression even begins."
+    },
+    {
+      "id": "memory-management-large-images",
+      "question": "Can this tool process high-resolution DSLR photos safely?",
+      "answer": "Yes. The engine uses createImageBitmap and automatically revokes object URLs upon completion, ensuring browser memory is freed immediately."
+    }
+  ]
+}

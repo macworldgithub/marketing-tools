@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "how-is-cryptographic-randomness-ensured",
+      "question": "How is true cryptographic randomness guaranteed?",
+      "answer": "Randomness is generated exclusively via `crypto.getRandomValues`, a cryptographically secure pseudorandom number generator (CSPRNG) seeded by your operating system kernel entropy. We forbid `Math.random` completely."
+    },
+    {
+      "id": "how-is-modulo-bias-prevented",
+      "question": "How does rejection sampling prevent modulo bias?",
+      "answer": "Standard modulo arithmetic (`rand % poolSize`) creates slight statistical favor toward early characters when 2^32 is not evenly divisible by the pool size. We use rejection sampling to discard numbers above the largest clean multiple."
+    },
+    {
+      "id": "how-is-entropy-calculated",
+      "question": "How is password entropy computed?",
+      "answer": "Entropy measures brute-force search space: `Entropy = Length × log2(Pool Size)`. For example, a 16-character password chosen across all 94 ASCII characters delivers 104.87 bits of cryptographic entropy."
+    },
+    {
+      "id": "are-passwords-stored-or-transmitted",
+      "question": "Are generated passwords transmitted or stored anywhere?",
+      "answer": "Never. Passwords exist purely in your browser runtime memory. No passwords, options, or generated keys are sent over the network or saved in local storage."
+    },
+    {
+      "id": "what-are-ambiguous-characters",
+      "question": "What characters are removed when \"Exclude Ambiguous\" is enabled?",
+      "answer": "We remove easily confused glyphs: uppercase I, lowercase l, numeral 1, uppercase O, and numeral 0 to prevent transcription errors on printed slips or display screens."
+    },
+    {
+      "id": "can-i-generate-numeric-pins",
+      "question": "Can this tool generate secure numeric PIN codes?",
+      "answer": "Yes. Switch to PIN mode to generate cryptographically uniform 4-digit, 6-digit, or custom-length numeric codes."
+    },
+    {
+      "id": "character-guarantee-assurance",
+      "question": "Does the generator guarantee characters from each selected set?",
+      "answer": "Yes. If you select uppercase, lowercase, numbers, and symbols, the algorithm guarantees at least one character from each selected class, then shuffles the output with the Fisher–Yates algorithm."
+    },
+    {
+      "id": "recommended-password-length",
+      "question": "What is the recommended minimum password length?",
+      "answer": "Security authorities such as NIST recommend a minimum of 16 characters for high-value accounts, providing over 100 bits of entropy against modern offline hash cracking attacks."
+    }
+  ]
+}

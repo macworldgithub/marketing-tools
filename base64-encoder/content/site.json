@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "slug": "base64-encoder",
+  "siteName": "Base64 Encoder",
+  "toolName": "Base64 Encoder & Decoder",
+  "primaryKeyword": "base64 encoder",
+  "domain": "TODO-set-domain.com",
+  "tagline": "Encode and decode UTF-8 text, binary files, and URL-safe data strings completely in your browser.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "blue",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": [
+      "theme"
+    ]
+  }
+}

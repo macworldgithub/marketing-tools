@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "what-is-lorem-ipsum",
+      "question": "What is Lorem Ipsum placeholder text?",
+      "answer": "Lorem Ipsum is standard dummy text used by the printing and typesetting industry since the 1500s. Derived from Cicero's philosophical treatise De Finibus Bonorum et Malorum, it mimics natural typographic word distributions."
+    },
+    {
+      "id": "exact-word-count-guarantee",
+      "question": "Does requesting N words produce exactly N words?",
+      "answer": "Yes. Our generator engine strictly guarantees that selecting any word count from 1 to 500 will output exactly that count of whitespace-separated words."
+    },
+    {
+      "id": "can-i-toggle-the-classic-opening",
+      "question": "Can I disable the standard \"Lorem ipsum dolor sit amet\" beginning?",
+      "answer": "Yes. A dedicated toggle switch allows you to start immediately with randomized Latin words rather than the classic opening phrase."
+    },
+    {
+      "id": "html-paragraph-tags",
+      "question": "Can I export dummy text pre-wrapped in HTML paragraph tags?",
+      "answer": "Yes. Selecting the HTML output option wraps every generated block in <p>...</p> tags ready for direct insertion into web templates."
+    },
+    {
+      "id": "sentence-punctuation-rules",
+      "question": "How are sentences and commas structured in the text?",
+      "answer": "Sentences range realistically between 5 and 15 words, with comma pauses inserted in clauses exceeding 8 words, capital initial letters, and terminating periods."
+    },
+    {
+      "id": "word-bank-composition",
+      "question": "What words are used in the generator vocabulary?",
+      "answer": "The engine uses the authentic 70-word classic Latin corpus used in traditional typography to preserve realistic character and vowel distributions."
+    },
+    {
+      "id": "why-use-lorem-over-english",
+      "question": "Why is Latin placeholder text preferable to English text in design mockups?",
+      "answer": "Latin placeholder text prevents viewers from being distracted by reading the content, focusing attention purely on visual hierarchy, font styling, and layout balance."
+    },
+    {
+      "id": "paragraph-sentence-variance",
+      "question": "How many sentences are included in each paragraph?",
+      "answer": "Paragraphs randomly vary between 3 and 7 sentences, creating organic visual blocks that closely simulate authentic editorial copy."
+    }
+  ]
+}

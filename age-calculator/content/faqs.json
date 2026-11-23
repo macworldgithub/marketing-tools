@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "how-is-exact-age-calculated",
+      "question": "How is exact age in years, months, and days calculated?",
+      "answer": "Age calculation determines the full calendar months between dates, adjusts for end-of-month day boundaries, and adds the remaining calendar days between the intermediate anchor date and the target date."
+    },
+    {
+      "id": "feb-29-leap-year-birthdays",
+      "question": "How are February 29 leap day birthdays handled in common years?",
+      "answer": "For individuals born on February 29 (leap day), standard international demographic convention recognizes their birthday as February 28 during non-leap years. This tool adheres strictly to that rule."
+    },
+    {
+      "id": "timezone-and-utc-consistency",
+      "question": "Why does this tool prevent date shifts across time zones?",
+      "answer": "Many online date utilities convert date inputs into UTC strings, causing birth dates to shift by a day depending on your local time zone. Our tool parses dates as discrete calendar integers `{year, month, day}` to eliminate time zone offsets."
+    },
+    {
+      "id": "calculate-age-at-future-past-date",
+      "question": "Can I calculate my age at a future or historical date?",
+      "answer": "Yes. Simply adjust the \"Age At Date\" field to any date on or after your birth date to see your exact age at that historical milestone or future anniversary."
+    },
+    {
+      "id": "day-of-week-born",
+      "question": "How does the tool determine what day of the week I was born on?",
+      "answer": "The day of the week is determined using the Gregorian calendar cycle via UTC day-of-week indexing, ensuring accurate identification (such as Monday or Saturday) regardless of your current time zone."
+    },
+    {
+      "id": "total-days-vs-months-calculation",
+      "question": "How are total days and total weeks counted?",
+      "answer": "Total days represent the exact elapsed astronomical days between dates (`Date.UTC`), accounting for every leap year in the intervening period. Total weeks are calculated by integer division of total days by 7."
+    },
+    {
+      "id": "is-my-birth-date-stored-or-sent",
+      "question": "Is my birth date uploaded or stored anywhere?",
+      "answer": "No. All date calculations run 100% locally in your browser. No birth dates, target dates, or calculation outputs are transmitted to our servers or stored in any database."
+    },
+    {
+      "id": "days-until-next-birthday",
+      "question": "How does the countdown to my next birthday work?",
+      "answer": "The calculator checks whether your birthday has already occurred in the current target year. If it has, it counts down the days to your birthday in the subsequent year; otherwise, it counts down to your birthday this year."
+    },
+    {
+      "id": "what-if-target-earlier-than-dob",
+      "question": "What happens if the target date is earlier than the birth date?",
+      "answer": "The tool strictly rejects target dates that precede your birth date, displaying an inline validation message and showing no results until a valid chronological pair is entered."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "slug": "bmi-calculator",
+  "siteName": "BMI Calculator",
+  "toolName": "BMI Calculator",
+  "primaryKeyword": "bmi calculator",
+  "domain": "TODO-set-domain.com",
+  "tagline": "Calculate your body mass index in metric or imperial units.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "blue",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": ["theme"]
+  }
+}

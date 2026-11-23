@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "how-does-natural-numeric-sorting-work",
+      "question": "What is natural numeric sorting?",
+      "answer": "Standard alphabetical sorting places \"10\" before \"2\". Natural sorting treats embedded numbers as quantities so that 2 comes before 10."
+    },
+    {
+      "id": "stable-sorting-guarantee",
+      "question": "Is the sorting algorithm stable?",
+      "answer": "Yes. When items compare equal (for instance, case-insensitive duplicates like \"Apple\" and \"apple\"), their original relative order is strictly preserved."
+    },
+    {
+      "id": "how-does-duplicate-removal-work",
+      "question": "How does duplicate removal handle letter casing?",
+      "answer": "When duplicate removal is enabled with case-insensitivity, the tool keeps the very first occurrence found in the list and removes subsequent variants."
+    },
+    {
+      "id": "sorting-by-last-name-or-word",
+      "question": "Can I sort a list of full names by last name?",
+      "answer": "Yes. Enabling \"Sort by Last Word\" extracts the trailing word of each entry (such as the surname) to collate names alphabetically."
+    },
+    {
+      "id": "delimiters-supported",
+      "question": "What input delimiters can I use?",
+      "answer": "You can split items by line breaks, commas, semicolons, whitespace, tabs, or a custom delimiter string."
+    },
+    {
+      "id": "unicode-character-collation",
+      "question": "Does the sorter handle accented letters and non-English alphabets?",
+      "answer": "Yes. Collation is powered by Intl.Collator which respects international language collation rules, correctly grouping accented and non-Latin characters."
+    },
+    {
+      "id": "idempotency-guarantee",
+      "question": "Is sorting idempotent?",
+      "answer": "Yes. Sorting an already sorted list produces the identical list without alterations, verified by automated fast-check property testing."
+    },
+    {
+      "id": "sorting-direction-options",
+      "question": "Can I reverse the sort order?",
+      "answer": "Yes. You can switch between Ascending (A to Z, lowest to highest) and Descending (Z to A, highest to lowest) with a single click."
+    }
+  ]
+}

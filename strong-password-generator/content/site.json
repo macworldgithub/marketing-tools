@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "slug": "strong-password-generator",
+  "siteName": "Strong Password Generator",
+  "toolName": "Strong Password Generator",
+  "primaryKeyword": "strong password generator",
+  "domain": "TODO-set-domain.com",
+  "tagline": "Generate high-entropy random passwords and multi-word passphrases with client-side CSPRNG randomness.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "indigo",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": [
+      "theme"
+    ]
+  }
+}

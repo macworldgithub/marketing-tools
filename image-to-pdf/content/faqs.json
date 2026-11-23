@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "how-are-images-compiled-into-pdf",
+      "question": "How are images converted into PDF without a backend?",
+      "answer": "This tool uses the pdf-lib library running natively in your browser. Each uploaded image is scaled and embedded onto document pages according to your layout preferences."
+    },
+    {
+      "id": "supported-page-sizes",
+      "question": "What page sizes and orientations can I choose?",
+      "answer": "Standard A4 (595.28 x 841.89 pt), US Letter (612 x 792 pt), and Fit-to-Image modes are supported in Portrait, Landscape, or Auto orientation."
+    },
+    {
+      "id": "can-i-reorder-images",
+      "question": "Can I change the order of pages before downloading?",
+      "answer": "Yes. You can use the Move Up and Move Down controls on each image to arrange pages exactly as desired."
+    },
+    {
+      "id": "margin-and-fit-options",
+      "question": "What margin and image scaling options are available?",
+      "answer": "You can choose between zero margin, 18 pt (small), or 36 pt (standard), with options to Contain (preserve aspect ratio), Cover, or Stretch images across the page."
+    },
+    {
+      "id": "is-my-document-private",
+      "question": "Is my document private and secure?",
+      "answer": "Completely private. No image bytes or generated PDF documents ever leave your device or travel over the network."
+    },
+    {
+      "id": "aspect-ratio-preservation",
+      "question": "Will my photos be stretched or distorted in the PDF?",
+      "answer": "In the default Contain mode, the engine calculates uniform proportional scaling so images are centered without any aspect ratio distortion."
+    },
+    {
+      "id": "pdf-standard-compliance",
+      "question": "Are the created PDF documents compatible with all PDF readers?",
+      "answer": "Yes. Generated documents conform strictly to the PDF 1.7 specification, rendering consistently across Adobe Acrobat, Apple Preview, Google Chrome, and mobile viewers."
+    },
+    {
+      "id": "maximum-pages-allowed",
+      "question": "Is there a limit on how many images can be compiled into one PDF?",
+      "answer": "You can compile dozens of images simultaneously. Memory management ensures buffers are processed sequentially into the PDF binary structure."
+    }
+  ]
+}
