@@ -10,6 +10,16 @@ export const Tool: React.FC = () => {
 
   const stats = analyzeText(text);
 
+  const handleReset = () => {
+    setText('Hello, world! It\'s a well-known fact.');
+  };
+
+  React.useEffect(() => {
+    const handleGlobalRefresh = () => handleReset();
+    window.addEventListener('tool:refresh', handleGlobalRefresh);
+    return () => window.removeEventListener('tool:refresh', handleGlobalRefresh);
+  }, []);
+
   const platforms = [
     { name: 'X / Twitter', max: 280 },
     { name: 'SMS (GSM-7)', max: 160 },
@@ -41,14 +51,24 @@ export const Tool: React.FC = () => {
       </div>
 
       <div className="flex items-center justify-between pb-6 border-b border-slate-200 dark:border-slate-800">
-        <button
-          type="button"
-          onClick={() => setText('')}
-          className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white min-h-[44px]"
-        >
-          <RotateCcw className="w-4 h-4" />
-          <span>Clear Text</span>
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handleReset}
+            className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white min-h-[44px]"
+            title="Reset to sample text"
+          >
+            <RotateCcw className="w-4 h-4" />
+            <span>Reset</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setText('')}
+            className="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white min-h-[44px]"
+          >
+            <span>Clear Text</span>
+          </button>
+        </div>
 
         <button
           type="button"

@@ -27,10 +27,16 @@ export const Tool: React.FC = () => {
   }
 
   const handleReset = () => {
-    setBirthDate('');
+    setBirthDate('1990-05-15');
     setTargetDate(todayStr);
     setCopied(false);
   };
+
+  React.useEffect(() => {
+    const handleGlobalRefresh = () => handleReset();
+    window.addEventListener('tool:refresh', handleGlobalRefresh);
+    return () => window.removeEventListener('tool:refresh', handleGlobalRefresh);
+  }, [todayStr]);
 
   const handleCopy = () => {
     if (!result) return;

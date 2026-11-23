@@ -64,16 +64,22 @@ export const Tool: React.FC<ToolProps> = () => {
 
   const handleReset = () => {
     if (unit === 'metric') {
-      setWeightKg('');
-      setHeightCm('');
+      setWeightKg('70');
+      setHeightCm('175');
     } else {
-      setWeightLb('');
-      setHeightFt('');
-      setHeightInRemainder('');
+      setWeightLb('154');
+      setHeightFt('5');
+      setHeightInRemainder('9');
     }
-    setAge('');
+    setAge('28');
     setCopied(false);
   };
+
+  React.useEffect(() => {
+    const handleGlobalRefresh = () => handleReset();
+    window.addEventListener('tool:refresh', handleGlobalRefresh);
+    return () => window.removeEventListener('tool:refresh', handleGlobalRefresh);
+  }, [unit]);
 
   const handleCopy = () => {
     if (!result) return;

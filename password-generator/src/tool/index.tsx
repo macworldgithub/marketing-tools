@@ -40,6 +40,12 @@ export const Tool: React.FC = () => {
     setCopiedIdx(null);
   };
 
+  React.useEffect(() => {
+    const handleGlobalRefresh = () => handleRegenerate();
+    window.addEventListener('tool:refresh', handleGlobalRefresh);
+    return () => window.removeEventListener('tool:refresh', handleGlobalRefresh);
+  });
+
   const handleCopy = (val: string, idx: number) => {
     navigator.clipboard.writeText(val);
     setCopiedIdx(idx);

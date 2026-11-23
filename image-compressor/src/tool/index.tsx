@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { formatFileSize, calculateCompressionSaved } from '../engines/image-io';
+import { RotateCcw } from 'lucide-react';
 
 interface CompressedItem {
   id: string;
@@ -18,6 +19,19 @@ export const Tool: React.FC = () => {
   const [maxDimension, setMaxDimension] = useState<number>(2048);
   const [items, setItems] = useState<CompressedItem[]>([]);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
+
+  const handleReset = () => {
+    setQuality(0.75);
+    setFormat('image/jpeg');
+    setMaxDimension(2048);
+    setItems([]);
+  };
+
+  useEffect(() => {
+    const handleGlobalRefresh = () => handleReset();
+    window.addEventListener('tool:refresh', handleGlobalRefresh);
+    return () => window.removeEventListener('tool:refresh', handleGlobalRefresh);
+  }, []);
 
   const processFile = (file: File): Promise<CompressedItem> => {
     return new Promise((resolve, reject) => {
@@ -108,6 +122,19 @@ export const Tool: React.FC = () => {
 
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 sm:p-8 max-w-[760px] mx-auto shadow-sm space-y-6">
+      <div className="flex justify-between items-center -mb-2">
+        <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Image Compression</span>
+        <button
+          type="button"
+          onClick={handleReset}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          title="Reset compressor settings and images"
+        >
+          <RotateCcw className="w-3.5 h-3.5" />
+          <span>Reset</span>
+        </button>
+      </div>
+
       {/* Notice */}
       <div className="p-3 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900 rounded-md text-xs text-emerald-800 dark:text-emerald-300">
         100% Client-Side. Images are never uploaded to a server. Metadata (EXIF/GPS) is stripped automatically.

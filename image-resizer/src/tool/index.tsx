@@ -57,6 +57,22 @@ export const Tool: React.FC = () => {
     setTargetHeight(String(newDims.height));
   };
 
+  const handleReset = () => {
+    setFile(null);
+    setOrigDims(null);
+    setTargetWidth('');
+    setTargetHeight('');
+    setQuality(0.85);
+    setFormat('image/jpeg');
+    setPreviewUrl(null);
+  };
+
+  React.useEffect(() => {
+    const handleGlobalRefresh = () => handleReset();
+    window.addEventListener('tool:refresh', handleGlobalRefresh);
+    return () => window.removeEventListener('tool:refresh', handleGlobalRefresh);
+  }, []);
+
   const handleDownload = async () => {
     if (!file || !origDims) return;
     setIsProcessing(true);
@@ -135,13 +151,24 @@ export const Tool: React.FC = () => {
                 <p className="text-xs text-slate-500">Original: {origDims?.width} × {origDims?.height} px ({formatFileSize(file.size)})</p>
               </div>
             </div>
-            <button
-              type="button"
-              onClick={() => { setFile(null); setPreviewUrl(null); }}
-              className="text-xs text-slate-500 hover:text-red-500 min-h-[44px] px-2"
-            >
-              Change Image
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handleReset}
+                className="inline-flex items-center gap-1 text-xs text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 min-h-[44px] px-2"
+                title="Reset to upload new image"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span>Reset</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => { setFile(null); setPreviewUrl(null); }}
+                className="text-xs text-slate-500 hover:text-red-500 min-h-[44px] px-2"
+              >
+                Change Image
+              </button>
+            </div>
           </div>
 
           {/* Dimension Controls */}

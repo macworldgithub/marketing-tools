@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { imagesToPDF, PageSizeOption, PageOrientation, PageFit, PDFImageInput } from '../engines/pdf';
+import { RotateCcw } from 'lucide-react';
 
 interface ImageEntry {
   id: string;
@@ -20,6 +21,20 @@ export const Tool: React.FC = () => {
   const [fit, setFit] = useState<PageFit>('contain');
   const [images, setImages] = useState<ImageEntry[]>([]);
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
+
+  const handleReset = () => {
+    setPageSize('A4');
+    setOrientation('portrait');
+    setMarginPt(36);
+    setFit('contain');
+    setImages([]);
+  };
+
+  useEffect(() => {
+    const handleGlobalRefresh = () => handleReset();
+    window.addEventListener('tool:refresh', handleGlobalRefresh);
+    return () => window.removeEventListener('tool:refresh', handleGlobalRefresh);
+  }, []);
 
   const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;

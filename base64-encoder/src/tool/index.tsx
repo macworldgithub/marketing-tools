@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { encodeBase64, decodeBase64, bytesToBase64 } from '../engines/base64';
+import { RotateCw, RotateCcw } from 'lucide-react';
 
 export const Tool: React.FC = () => {
   const [mode, setMode] = useState<'encode' | 'decode'>('encode');
@@ -12,6 +13,21 @@ export const Tool: React.FC = () => {
   const [mimeType, setMimeType] = useState<string>('text/plain');
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState<boolean>(false);
+
+  const handleReset = () => {
+    setMode('encode');
+    setInput('Hello, World!');
+    setUrlSafe(false);
+    setLineWrap(false);
+    setDataUri(false);
+    setError(null);
+  };
+
+  useEffect(() => {
+    const handleGlobalRefresh = () => handleReset();
+    window.addEventListener('tool:refresh', handleGlobalRefresh);
+    return () => window.removeEventListener('tool:refresh', handleGlobalRefresh);
+  }, []);
 
   let output = '';
   try {
@@ -110,6 +126,15 @@ export const Tool: React.FC = () => {
           </>
         )}
         <div className="ml-auto flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handleReset}
+            className="inline-flex items-center gap-1 px-2.5 py-1 text-xs text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            title="Reset to sample text"
+          >
+            <RotateCw className="w-3.5 h-3.5" />
+            <span>Reset</span>
+          </button>
           <label className="cursor-pointer px-2.5 py-1 bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded text-xs hover:bg-slate-200 dark:hover:bg-slate-700">
             <span>Upload File</span>
             <input type="file" onChange={handleFileUpload} className="hidden" />

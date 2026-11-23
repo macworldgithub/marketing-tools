@@ -9,7 +9,7 @@ import {
   generateBackgroundCss,
   renderBackgroundToCanvas,
 } from '../engines/background';
-import { Copy, Download, Check, Sparkles } from 'lucide-react';
+import { Copy, Download, Check, Sparkles, RotateCcw } from 'lucide-react';
 
 export function Tool() {
   const [bgType, setBgType] = useState<BackgroundType>('linear-gradient');
@@ -24,6 +24,25 @@ export function Tool() {
   const [patternOpacity, setPatternOpacity] = useState<number>(0.2);
   const [copied, setCopied] = useState<boolean>(false);
   const [downloading, setDownloading] = useState<boolean>(false);
+
+  const handleReset = () => {
+    setBgType('linear-gradient');
+    setPreset('1920x1080');
+    setWidth(1920);
+    setHeight(1080);
+    setColor1('#3b82f6');
+    setColor2('#1e293b');
+    setAngle(135);
+    setPatternType('dots');
+    setPatternScale(24);
+    setPatternOpacity(0.2);
+  };
+
+  useEffect(() => {
+    const handleGlobalRefresh = () => handleReset();
+    window.addEventListener('tool:refresh', handleGlobalRefresh);
+    return () => window.removeEventListener('tool:refresh', handleGlobalRefresh);
+  }, []);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -376,6 +395,15 @@ export function Tool() {
             </div>
 
             <div className="flex flex-wrap gap-2.5">
+              <button
+                type="button"
+                onClick={handleReset}
+                className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-border bg-background px-3.5 py-2.5 text-xs font-medium text-foreground transition-colors hover:bg-muted"
+                title="Reset background options to default"
+              >
+                <RotateCcw className="h-4 w-4" />
+                <span>Reset</span>
+              </button>
               <button
                 type="button"
                 onClick={() => handleDownload('png')}

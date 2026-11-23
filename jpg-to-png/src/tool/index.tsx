@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { formatFileSize } from '../engines/image-io';
 import { zipSync } from 'fflate';
+import { RotateCcw } from 'lucide-react';
 
 interface ConvertedPng {
   id: string;
@@ -16,6 +17,16 @@ interface ConvertedPng {
 export const Tool: React.FC = () => {
   const [items, setItems] = useState<ConvertedPng[]>([]);
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
+
+  const handleReset = () => {
+    setItems([]);
+  };
+
+  useEffect(() => {
+    const onRefresh = () => handleReset();
+    window.addEventListener('tool:refresh', onRefresh);
+    return () => window.removeEventListener('tool:refresh', onRefresh);
+  }, []);
 
   const convertFile = (file: File): Promise<ConvertedPng> => {
     return new Promise((resolve, reject) => {
@@ -119,8 +130,14 @@ export const Tool: React.FC = () => {
                   Download All (ZIP)
                 </button>
               )}
-              <button onClick={() => setItems([])} className="hover:text-slate-800 dark:hover:text-slate-200">
-                Clear
+              <button
+                type="button"
+                onClick={handleReset}
+                className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 rounded transition-colors"
+                title="Reset converted files"
+              >
+                <RotateCcw className="w-3.5 h-3.5" />
+                <span>Reset</span>
               </button>
             </div>
           </div>
