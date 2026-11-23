@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { calculateLoan, formatCurrency } from '../engines/loan';
+import { RotateCcw } from 'lucide-react';
 
 export const Tool: React.FC = () => {
   const [amount, setAmount] = useState<string>('1000000');
@@ -9,6 +10,19 @@ export const Tool: React.FC = () => {
   const [tenureYears, setTenureYears] = useState<string>('5');
   const [currency, setCurrency] = useState<string>('INR');
   const [isFlatRate, setIsFlatRate] = useState<boolean>(false);
+
+  const handleReset = () => {
+    setAmount('1000000');
+    setRate('9');
+    setTenureYears('5');
+    setIsFlatRate(false);
+  };
+
+  useEffect(() => {
+    const handleGlobalRefresh = () => handleReset();
+    window.addEventListener('tool:refresh', handleGlobalRefresh);
+    return () => window.removeEventListener('tool:refresh', handleGlobalRefresh);
+  }, []);
 
   const months = Math.max(1, Math.round(parseFloat(tenureYears) * 12 || 12));
   let result: ReturnType<typeof calculateLoan> | null = null;
@@ -61,15 +75,26 @@ export const Tool: React.FC = () => {
             <option value="GBP">£ GBP</option>
           </select>
         </div>
-        <label className="flex items-center gap-2 cursor-pointer font-medium text-slate-700 dark:text-slate-300">
-          <input
-            type="checkbox"
-            checked={isFlatRate}
-            onChange={(e) => setIsFlatRate(e.target.checked)}
-            className="rounded text-emerald-600"
-          />
-          <span>Flat Rate Mode (Not reducing balance)</span>
-        </label>
+        <div className="flex items-center gap-3">
+          <label className="flex items-center gap-2 cursor-pointer font-medium text-slate-700 dark:text-slate-300">
+            <input
+              type="checkbox"
+              checked={isFlatRate}
+              onChange={(e) => setIsFlatRate(e.target.checked)}
+              className="rounded text-emerald-600"
+            />
+            <span>Flat Rate Mode</span>
+          </label>
+          <button
+            type="button"
+            onClick={handleReset}
+            className="inline-flex items-center gap-1 px-2.5 py-1 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            title="Reset to default EMI values"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Reset</span>
+          </button>
+        </div>
       </div>
 
       {/* Inputs */}

@@ -1,15 +1,28 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { formatJSON, validateJSON, repairJSON, IndentOption } from '../engines/json';
+import { RotateCw, RotateCcw } from 'lucide-react';
+
+const DEFAULT_SAMPLE_JSON = '{\n  "b": 1,\n  "a": [1, 2, {"c": null}]\n}';
 
 export const Tool: React.FC = () => {
-  const [input, setInput] = useState<string>('{\n  "b": 1,\n  "a": [1, 2, {"c": null}]\n}');
+  const [input, setInput] = useState<string>(DEFAULT_SAMPLE_JSON);
   const [indent, setIndent] = useState<IndentOption>('2');
   const [sortKeys, setSortKeys] = useState<boolean>(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [errorPos, setErrorPos] = useState<{ line: number; column: number } | null>(null);
   const [copied, setCopied] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleGlobalRefresh = () => {
+      setInput(DEFAULT_SAMPLE_JSON);
+      setErrorMsg(null);
+      setErrorPos(null);
+    };
+    window.addEventListener('tool:refresh', handleGlobalRefresh);
+    return () => window.removeEventListener('tool:refresh', handleGlobalRefresh);
+  }, []);
 
   const handleFormat = () => {
     try {
@@ -93,6 +106,32 @@ export const Tool: React.FC = () => {
           </label>
         </div>
         <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              setInput(DEFAULT_SAMPLE_JSON);
+              setErrorMsg(null);
+              setErrorPos(null);
+            }}
+            className="inline-flex items-center gap-1 px-2.5 py-1 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            title="Reset to sample JSON"
+          >
+            <RotateCw className="w-3 h-3" />
+            <span>Reset</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setInput('');
+              setErrorMsg(null);
+              setErrorPos(null);
+            }}
+            className="inline-flex items-center gap-1 px-2.5 py-1 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            title="Clear text"
+          >
+            <RotateCcw className="w-3 h-3" />
+            <span>Clear</span>
+          </button>
           <button
             onClick={handleRepair}
             className="px-2.5 py-1 bg-amber-50 dark:bg-amber-950/40 border border-amber-300 dark:border-amber-800 text-amber-700 dark:text-amber-300 rounded font-medium hover:bg-amber-100"

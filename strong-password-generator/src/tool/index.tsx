@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   generatePassword,
   generatePassphrase,
@@ -8,6 +8,7 @@ import {
   getStrengthLabel,
   GeneratedPassword,
 } from '../engines/password';
+import { RotateCw, Copy, Check } from 'lucide-react';
 
 export const Tool: React.FC = () => {
   const [mode, setMode] = useState<'password' | 'passphrase'>('password');
@@ -21,31 +22,48 @@ export const Tool: React.FC = () => {
   const [separator, setSeparator] = useState<string>('-');
   const [capitalize, setCapitalize] = useState<boolean>(true);
   const [count, setCount] = useState<number>(5);
+  const [refreshCount, setRefreshCount] = useState<number>(0);
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
 
-  let passwords: GeneratedPassword[] = [];
-  try {
-    if (mode === 'password') {
-      passwords = generatePassword({
-        length,
-        includeUppercase: useUpper,
-        includeLowercase: useLower,
-        includeNumbers: useNumbers,
-        includeSymbols: useSymbols,
-        excludeAmbiguous,
-        count,
-      });
-    } else {
-      passwords = generatePassphrase({
-        wordCount,
-        separator,
-        capitalize,
-        count,
-      });
+  const passwords: GeneratedPassword[] = useMemo(() => {
+    try {
+      if (mode === 'password') {
+        return generatePassword({
+          length,
+          includeUppercase: useUpper,
+          includeLowercase: useLower,
+          includeNumbers: useNumbers,
+          includeSymbols: useSymbols,
+          excludeAmbiguous,
+          count,
+        });
+      } else {
+        return generatePassphrase({
+          wordCount,
+          separator,
+          capitalize,
+          count,
+        });
+      }
+    } catch (err) {
+      return [];
     }
-  } catch (err) {
-    passwords = [];
-  }
+    // refreshCount is in dependencies to trigger new random passwords
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [mode, length, useUpper, useLower, useNumbers, useSymbols, excludeAmbiguous, wordCount, separator, capitalize, count, refreshCount]);
+
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+    setRefreshCount((c) => c + 1);
+    setTimeout(() => setIsRefreshing(false), 350);
+  };
+
+  useEffect(() => {
+    const handleGlobalRefresh = () => handleRefresh();
+    window.addEventListener('tool:refresh', handleGlobalRefresh);
+    return () => window.removeEventListener('tool:refresh', handleGlobalRefresh);
+  });
 
   const primary = passwords[0];
 
@@ -84,16 +102,29 @@ export const Tool: React.FC = () => {
       {/* Primary Display */}
       {primary && (
         <div className="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-lg border border-slate-200 dark:border-slate-700">
-          <div className="flex items-center justify-between gap-3 mb-2">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-2">
             <span className="font-mono text-lg sm:text-xl font-bold text-slate-900 dark:text-white break-all">
               {primary.value}
             </span>
-            <button
-              onClick={() => handleCopy(primary.value, 0)}
-              className="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-xs font-semibold whitespace-nowrap"
-            >
-              {copiedIdx === 0 ? 'Copied!' : 'Copy'}
-            </button>
+            <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
+              <button
+                type="button"
+                onClick={handleRefresh}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200 rounded text-xs font-semibold transition-colors"
+                title="Generate new password"
+              >
+                <RotateCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin' : ''}`} />
+                <span>Refresh</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => handleCopy(primary.value, 0)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded text-xs font-semibold whitespace-nowrap transition-colors"
+              >
+                {copiedIdx === 0 ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                <span>{copiedIdx === 0 ? 'Copied!' : 'Copy'}</span>
+              </button>
+            </div>
           </div>
           <div className="flex items-center gap-3 text-xs text-slate-500">
             <span>Entropy: <strong className="text-slate-800 dark:text-slate-200">{primary.entropyBits} bits</strong></span>
@@ -193,6 +224,7 @@ export const Tool: React.FC = () => {
               <div key={idx} className="p-2.5 flex items-center justify-between text-xs bg-white dark:bg-slate-900">
                 <span className="font-mono text-slate-800 dark:text-slate-200 truncate pr-3">{p.value}</span>
                 <button
+                  type="button"
                   onClick={() => handleCopy(p.value, idx + 1)}
                   className="px-2.5 py-1 text-slate-600 hover:text-indigo-600 font-medium"
                 >

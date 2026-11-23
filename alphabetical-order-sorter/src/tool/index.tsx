@@ -1,10 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { sortList, SortOptions } from '../engines/sorter';
+import { RotateCw, RotateCcw } from 'lucide-react';
+
+const DEFAULT_SAMPLE_ITEMS = 'banana, Apple, cherry, apple, 10, 2';
 
 export const Tool: React.FC = () => {
-  const [input, setInput] = useState<string>('banana, Apple, cherry, apple, 10, 2');
+  const [input, setInput] = useState<string>(DEFAULT_SAMPLE_ITEMS);
   const [delimiter, setDelimiter] = useState<'newline' | 'comma' | 'semicolon' | 'space'>('comma');
   const [order, setOrder] = useState<'asc' | 'desc'>('asc');
   const [caseInsensitive, setCaseInsensitive] = useState<boolean>(true);
@@ -12,6 +15,14 @@ export const Tool: React.FC = () => {
   const [removeDuplicates, setRemoveDuplicates] = useState<boolean>(false);
   const [sortByLastWord, setSortByLastWord] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
+
+  useEffect(() => {
+    const handleGlobalRefresh = () => {
+      setInput(DEFAULT_SAMPLE_ITEMS);
+    };
+    window.addEventListener('tool:refresh', handleGlobalRefresh);
+    return () => window.removeEventListener('tool:refresh', handleGlobalRefresh);
+  }, []);
 
   const result = sortList(input, {
     delimiter,
@@ -78,9 +89,29 @@ export const Tool: React.FC = () => {
 
       {/* Input */}
       <div>
-        <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1.5">
-          Input Items
-        </label>
+        <div className="flex items-center justify-between text-xs text-slate-700 dark:text-slate-300 mb-1.5 px-1">
+          <span className="font-medium">Input Items</span>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setInput(DEFAULT_SAMPLE_ITEMS)}
+              className="inline-flex items-center gap-1 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white py-1 px-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              title="Reset to sample items"
+            >
+              <RotateCw className="w-3.5 h-3.5" />
+              <span>Reset</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setInput('')}
+              className="inline-flex items-center gap-1 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white py-1 px-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              title="Clear items"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Clear</span>
+            </button>
+          </div>
+        </div>
         <textarea
           value={input}
           onChange={(e) => setInput(e.target.value)}

@@ -1,20 +1,59 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { analyzeText } from '../engines/text-stats';
+import { RotateCw, RotateCcw, Copy, Check } from 'lucide-react';
+
+const DEFAULT_SAMPLE_TEXT = 'Hello, world! It\'s a well-known fact that writing clean, concise text improves readability and user engagement.';
 
 export const Tool: React.FC = () => {
-  const [text, setText] = useState<string>(
-    'Hello, world! It\'s a well-known fact that writing clean, concise text improves readability and user engagement.'
-  );
+  const [text, setText] = useState<string>(DEFAULT_SAMPLE_TEXT);
   const [excludeStopWords, setExcludeStopWords] = useState<boolean>(true);
+  const [copied, setCopied] = useState<boolean>(false);
 
   const stats = analyzeText(text, { excludeStopWords });
 
+  useEffect(() => {
+    const handleGlobalRefresh = () => {
+      setText(DEFAULT_SAMPLE_TEXT);
+    };
+    window.addEventListener('tool:refresh', handleGlobalRefresh);
+    return () => window.removeEventListener('tool:refresh', handleGlobalRefresh);
+  }, []);
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 sm:p-8 max-w-[760px] mx-auto shadow-sm space-y-6">
-      {/* Editor */}
-      <div>
+      {/* Editor & Toolbar */}
+      <div className="space-y-2">
+        <div className="flex items-center justify-between text-xs text-slate-600 dark:text-slate-400 px-1">
+          <label className="font-medium">Enter or paste text</label>
+          <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setText(DEFAULT_SAMPLE_TEXT)}
+              className="inline-flex items-center gap-1 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white py-1 px-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              title="Reset to sample text"
+            >
+              <RotateCw className="w-3.5 h-3.5" />
+              <span>Sample</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setText('')}
+              className="inline-flex items-center gap-1 text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white py-1 px-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              title="Clear all text"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Clear</span>
+            </button>
+          </div>
+        </div>
         <textarea
           value={text}
           onChange={(e) => setText(e.target.value)}
@@ -56,9 +95,40 @@ export const Tool: React.FC = () => {
         </div>
       </div>
 
+      {/* Actions */}
+      <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setText(DEFAULT_SAMPLE_TEXT)}
+            className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-md border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          >
+            <RotateCw className="w-3.5 h-3.5" />
+            <span>Reset Text</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setText('')}
+            className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold rounded-md border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          >
+            <RotateCcw className="w-3.5 h-3.5" />
+            <span>Clear</span>
+          </button>
+        </div>
+
+        <button
+          type="button"
+          onClick={handleCopy}
+          className="inline-flex items-center gap-1.5 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md text-xs font-semibold transition-colors"
+        >
+          {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+          <span>{copied ? 'Copied' : 'Copy Text'}</span>
+        </button>
+      </div>
+
       {/* Keyword Density */}
       {stats.topKeywords.length > 0 && (
-        <div className="space-y-3">
+        <div className="space-y-3 pt-2 border-t border-slate-100 dark:border-slate-800">
           <div className="flex justify-between items-center text-xs">
             <span className="font-semibold text-slate-700 dark:text-slate-300">Top Keywords & Density</span>
             <label className="flex items-center gap-1.5 cursor-pointer text-slate-500">

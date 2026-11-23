@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   percentageOf,
   whatPercentageOf,
@@ -9,6 +9,7 @@ import {
   percentageChange,
   percentageDifference,
 } from '../engines/percentage';
+import { RotateCcw } from 'lucide-react';
 
 export const Tool: React.FC = () => {
   // Panel 1: X% of Y
@@ -36,6 +37,21 @@ export const Tool: React.FC = () => {
   const [p6A, setP6A] = useState<string>('50');
   const [p6B, setP6B] = useState<string>('75');
 
+  const handleReset = () => {
+    setP1X('15'); setP1Y('200');
+    setP2X('30'); setP2Y('200');
+    setP3X('30'); setP3Y('15');
+    setP4Y('200'); setP4X('15'); setP4IsIncrease(true);
+    setP5A('50'); setP5B('75');
+    setP6A('50'); setP6B('75');
+  };
+
+  useEffect(() => {
+    const handleGlobalRefresh = () => handleReset();
+    window.addEventListener('tool:refresh', handleGlobalRefresh);
+    return () => window.removeEventListener('tool:refresh', handleGlobalRefresh);
+  }, []);
+
   const safeCalc = <T,>(fn: () => T, fallback: T = '—' as unknown as T): T => {
     try {
       return fn();
@@ -53,6 +69,18 @@ export const Tool: React.FC = () => {
 
   return (
     <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-6 sm:p-8 max-w-[720px] mx-auto shadow-sm space-y-8">
+      <div className="flex justify-end -mb-4">
+        <button
+          type="button"
+          onClick={handleReset}
+          className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-md border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+          title="Reset all percentage inputs to defaults"
+        >
+          <RotateCcw className="w-3.5 h-3.5" />
+          <span>Reset All</span>
+        </button>
+      </div>
+
       {/* Panel 1: X% of Y */}
       <div className="p-4 bg-slate-50 dark:bg-slate-800/40 rounded-lg border border-slate-200 dark:border-slate-700">
         <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-3">1. Calculate Percentage of a Value</h3>

@@ -1,11 +1,11 @@
 {
   "source": "_template/core",
-  "timestamp": "2026-11-23T08:01:46.027Z",
+  "timestamp": "2026-11-23T10:17:01.623Z",
   "files": {
     "components/Breadcrumbs.tsx": "d9f50910b146d89a8c82ec4e8b3943cb053c51ee41bc9ab8d31b61a4da1edbfd",
     "components/FAQAccordion.tsx": "9084cb32c97b636bf85fbd8af031eb3f732a48dc07a96d5044b87049bfa8a704",
     "components/Footer.tsx": "a375a877e1c54bde0dbd9b6097015a98ea4e32ca4f36d56f073e8472a5ec5d10",
-    "components/Header.tsx": "939d6001ea8b4e449e1fab9f9350dacdabf2bc9e06b8d8ba7233baac9b79e17e",
+    "components/Header.tsx": "5ccf0454a151c04c6114e22e51c159db0bc7e51de4156b099ee11cb2ab4c9c27",
     "components/LayoutShell.tsx": "d23bb0bc0d1121a055c65d92f1315bc21d7ce273b4cf90027f95a35573ad975e",
     "components/LegalRenderer.tsx": "f430b09f2fa7904e0b8d10b1fb87622cb9a1e345a42a54176135e811bf09ec49",
     "components/MarkdownContent.tsx": "8155c5eea7e00f1d5af2d922a7aa4e4eba293185738331d9613cc62c5a6026c2",
@@ -24,5 +24,5 @@
     "utils/csp.ts": "cbeb11949672453f1e9bd7417fb8d6d83ba0eda3a7e7be85af8e239bd9edb314",
     "utils/sanitize.ts": "6d4e9bff864d656effc395fd4c4420a0ebaaa0cdd36d37b17b936efe231719bd"
   },
-  "aggregateHash": "3f30cd7ac4db76981f751f3dc728e36fa09faf4f6414287870987dd0de19213a"
+  "aggregateHash": "7ef705238a475f933b1af3b5a85fb446a8aa1a8db9c785de63524a5ad7ced74e"
 }

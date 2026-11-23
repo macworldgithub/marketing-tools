@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import QRCode from 'qrcode';
 import { getContrastRatio } from '../engines/qr';
-import { Download, AlertTriangle, Link as LinkIcon, Mail, Phone, MessageSquare, User, FileText } from 'lucide-react';
+import { Download, AlertTriangle, Link as LinkIcon, Mail, Phone, MessageSquare, User, FileText, RotateCcw } from 'lucide-react';
 
 export const Tool: React.FC = () => {
   const [contentType, setContentType] = useState<'url' | 'text' | 'email' | 'phone' | 'sms'>('url');
@@ -16,6 +16,20 @@ export const Tool: React.FC = () => {
   const [svgString, setSvgString] = useState<string>('');
 
   const contrast = getContrastRatio(fgColor, bgColor);
+
+  const handleReset = () => {
+    setContentType('url');
+    setInputVal('https://example.com');
+    setFgColor('#000000');
+    setBgColor('#ffffff');
+    setEcLevel('M');
+  };
+
+  useEffect(() => {
+    const handleGlobalRefresh = () => handleReset();
+    window.addEventListener('tool:refresh', handleGlobalRefresh);
+    return () => window.removeEventListener('tool:refresh', handleGlobalRefresh);
+  }, []);
 
   useEffect(() => {
     if (!inputVal) return;
@@ -170,6 +184,15 @@ export const Tool: React.FC = () => {
           </div>
 
           <div className="pt-2 flex flex-col gap-2">
+            <button
+              type="button"
+              onClick={handleReset}
+              className="w-full inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 min-h-[44px] text-sm"
+              title="Reset QR code to defaults"
+            >
+              <RotateCcw className="w-4 h-4" />
+              <span>Reset to Defaults</span>
+            </button>
             <button
               type="button"
               onClick={handleDownloadPng}

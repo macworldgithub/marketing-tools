@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, RotateCw } from 'lucide-react';
 import { ThemeToggle } from './ThemeToggle';
 
 interface HeaderProps {
@@ -44,13 +44,35 @@ export const Header: React.FC<HeaderProps> = ({ siteName }) => {
           >
             Privacy
           </Link>
-          <div className="pl-2 border-l border-slate-200 dark:border-slate-800">
+          <div className="pl-2 border-l border-slate-200 dark:border-slate-800 flex items-center space-x-1">
+            <button
+              type="button"
+              onClick={() => {
+                window.dispatchEvent(new CustomEvent('tool:refresh'));
+              }}
+              className="p-2 rounded-md text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary min-w-[36px] min-h-[36px] flex items-center justify-center transition-colors"
+              title="Refresh tool"
+              aria-label="Refresh tool"
+            >
+              <RotateCw className="w-4 h-4" />
+            </button>
             <ThemeToggle />
           </div>
         </nav>
 
         {/* Mobile controls */}
-        <div className="flex md:hidden items-center space-x-2">
+        <div className="flex md:hidden items-center space-x-1">
+          <button
+            type="button"
+            onClick={() => {
+              window.dispatchEvent(new CustomEvent('tool:refresh'));
+            }}
+            className="p-2 rounded-md text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent-primary min-w-[40px] min-h-[40px] flex items-center justify-center transition-colors"
+            title="Refresh tool"
+            aria-label="Refresh tool"
+          >
+            <RotateCw className="w-4 h-4" />
+          </button>
           <ThemeToggle />
           <button
             type="button"

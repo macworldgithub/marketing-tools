@@ -17,6 +17,24 @@ export const Tool: React.FC = () => {
   const [prevCredits, setPrevCredits] = useState<string>('60');
   const [copied, setCopied] = useState<boolean>(false);
 
+  const handleReset = () => {
+    setCourses([
+      { id: '1', name: 'English Literature', grade: 'A', credits: 3, level: 'Regular' },
+      { id: '2', name: 'Calculus I', grade: 'B+', credits: 4, level: 'Regular' },
+      { id: '3', name: 'Chemistry', grade: 'B', credits: 3, level: 'Regular' },
+      { id: '4', name: 'World History', grade: 'C', credits: 2, level: 'Regular' },
+    ]);
+    setHasCumulative(false);
+    setPrevGpa('3.40');
+    setPrevCredits('60');
+  };
+
+  React.useEffect(() => {
+    const handleGlobalRefresh = () => handleReset();
+    window.addEventListener('tool:refresh', handleGlobalRefresh);
+    return () => window.removeEventListener('tool:refresh', handleGlobalRefresh);
+  }, []);
+
   const result = calculateGPA(
     courses,
     hasCumulative ? { previousGpa: prevGpa, previousCredits: prevCredits } : undefined
@@ -125,6 +143,16 @@ export const Tool: React.FC = () => {
         >
           <Plus className="w-4 h-4" />
           <span>Add Course</span>
+        </button>
+
+        <button
+          type="button"
+          onClick={handleReset}
+          className="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-medium rounded-lg border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 min-h-[44px]"
+          title="Reset courses to default"
+        >
+          <RotateCcw className="w-4 h-4" />
+          <span>Reset</span>
         </button>
 
         <button

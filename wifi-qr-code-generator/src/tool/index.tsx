@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import QRCode from 'qrcode';
 import { formatWiFiPayload } from '../engines/qr';
+import { RotateCcw } from 'lucide-react';
 
 export const Tool: React.FC = () => {
   const [ssid, setSsid] = useState<string>('Home-Network');
@@ -11,6 +12,19 @@ export const Tool: React.FC = () => {
   const [hidden, setHidden] = useState<boolean>(false);
   const [qrUrl, setQrUrl] = useState<string>('');
   const [svgStr, setSvgStr] = useState<string>('');
+
+  const handleReset = () => {
+    setSsid('Home-Network');
+    setPassword('SecretPassword123');
+    setAuthType('WPA');
+    setHidden(false);
+  };
+
+  useEffect(() => {
+    const handleGlobalRefresh = () => handleReset();
+    window.addEventListener('tool:refresh', handleGlobalRefresh);
+    return () => window.removeEventListener('tool:refresh', handleGlobalRefresh);
+  }, []);
 
   const payload = formatWiFiPayload({
     ssid,
@@ -116,7 +130,16 @@ export const Tool: React.FC = () => {
           <div className="font-bold text-slate-900 dark:text-white text-sm mb-1">{ssid || 'Wi-Fi Network'}</div>
           <div className="text-xs text-slate-500 mb-4">Scan with camera to connect</div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <button
+              type="button"
+              onClick={handleReset}
+              className="inline-flex items-center gap-1 px-3 py-1.5 border border-slate-300 dark:border-slate-700 rounded text-xs font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300"
+              title="Reset to defaults"
+            >
+              <RotateCcw className="w-3.5 h-3.5" />
+              <span>Reset</span>
+            </button>
             <a
               href={qrUrl}
               download={`wifi-${ssid || 'qr'}.png`}

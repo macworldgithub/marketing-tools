@@ -48,6 +48,21 @@ export const Tool: React.FC = () => {
     URL.revokeObjectURL(url);
   };
 
+  const handleReset = () => {
+    setAmount('10000');
+    setRate('6');
+    setTermYears('3');
+    setTermMonths('36');
+    setIsYears(true);
+    setExtraPayment('0');
+  };
+
+  React.useEffect(() => {
+    const handleGlobalRefresh = () => handleReset();
+    window.addEventListener('tool:refresh', handleGlobalRefresh);
+    return () => window.removeEventListener('tool:refresh', handleGlobalRefresh);
+  }, []);
+
   const handleCopy = () => {
     if (!result) return;
     const text = `Monthly Payment: ${currency}${result.monthlyPayment} | Total Interest: ${currency}${result.totalInterest} | Total Paid: ${currency}${result.totalPaid}`;
@@ -180,6 +195,15 @@ export const Tool: React.FC = () => {
             </button>
 
             <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={handleReset}
+                className="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium rounded-lg border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 min-h-[44px]"
+                title="Reset to default loan values"
+              >
+                <RotateCcw className="w-4 h-4" />
+                <span>Reset</span>
+              </button>
               <button
                 type="button"
                 onClick={handleDownloadCsv}
