@@ -60,3 +60,4 @@ jobs:
               echo "Successfully deployed $SLUG to VPS!"
             fi
           done
+

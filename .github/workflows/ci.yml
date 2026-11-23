@@ -41,6 +41,12 @@ jobs:
           pnpm each "pnpm test"
           pnpm each "pnpm validate"
 
+      - name: Test and Build Sites Admin
+        run: |
+          cd sites-admin
+          pnpm install --frozen-lockfile
+          pnpm test
+          pnpm build
+
       - name: Verify Standalone Isolation
         run: pnpm verify-standalone
-

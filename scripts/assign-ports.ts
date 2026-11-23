@@ -33,3 +33,4 @@ for (const [slug, port] of Object.entries(ports)) {
 const adminPortsPath = path.join(ROOT_DIR, 'sites-admin', 'src', 'lib', 'ports.json');
 fs.copyFileSync(PORTS_PATH, adminPortsPath);
 console.log(`✅ Copied PORTS.json to ${adminPortsPath}`);
+
