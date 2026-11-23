@@ -111,16 +111,21 @@ function createStubPreviewServer(port: number): Promise<http.Server> {
 }
 
 async function main() {
-  console.log('Starting E2E verification test for Sites Admin...');
+  console.log('Starting Responsive E2E verification test for Sites Admin...');
 
   const adminServer = await createStaticServer(OUT_DIR, ADMIN_PORT);
   const stubServer = await createStubPreviewServer(STUB_PORT);
 
   const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext({ viewport: { width: 1400, height: 900 } });
-  const page = await context.newPage();
 
   try {
+    // ----------------------------------------------------
+    // PHASE 1: Desktop / Laptop Viewport (1280 x 800)
+    // ----------------------------------------------------
+    console.log('\n--- Testing Desktop / Laptop Viewport (1280 x 800) ---');
+    const desktopContext = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+    const page = await desktopContext.newPage();
+
     // 1. Visit Settings page and activate Mock Store
     console.log('1. Connecting to Mock Store...');
     await page.goto(`http://127.0.0.1:${ADMIN_PORT}/settings/`);
@@ -135,13 +140,13 @@ async function main() {
     }, { STUB_PORT });
 
     // 2. Navigate to Dashboard
-    console.log('2. Verifying Dashboard...');
+    console.log('2. Verifying Desktop Dashboard...');
     await page.goto(`http://127.0.0.1:${ADMIN_PORT}/`);
     await page.waitForLoadState('networkidle');
     await page.waitForTimeout(1000);
 
     const siteRows = await page.locator('tbody tr').count();
-    console.log(`✅ Dashboard loaded: found ${siteRows} sites in table.`);
+    console.log(`✅ Desktop Dashboard: found ${siteRows} sites in table.`);
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'admin-dashboard.png') });
 
     // 3. Navigate to Site Editor
@@ -158,6 +163,7 @@ async function main() {
     // Add new FAQ and fill valid content
     await page.click('text=Add FAQ');
     await page.waitForTimeout(500);
+
     const newQuestionInput = page.locator('input[placeholder="e.g. How does this calculator work?"]').last();
     await newQuestionInput.fill('Is there an API available?');
     const newAnswerInput = page.locator('textarea[placeholder="Markdown answer..."]').last();
@@ -173,7 +179,7 @@ async function main() {
     await page.waitForTimeout(500);
 
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'admin-site-editor.png') });
-    console.log('✅ Site Editor verified with Live Preview and Markdown toolbar.');
+    console.log('✅ Desktop Site Editor verified with Live Preview and Markdown toolbar.');
 
     // Save draft
     await page.click('text=Save Draft');
@@ -209,11 +215,6 @@ async function main() {
     const totalModified = await page.locator('text=modified file').innerText();
     console.log(`✅ Review Screen: ${totalModified}`);
 
-    const errorEls = await page.locator('div:has-text("validation error")').allInnerTexts();
-    console.log('Error elements on Review Screen:', errorEls);
-    const siteErrors = await page.locator('.text-red-700').allInnerTexts();
-    console.log('Site errors on Review Screen:', siteErrors);
-
     // Click Commit Changes
     await page.click('button:has-text("Commit Changes...")');
     await page.waitForTimeout(500);
@@ -223,9 +224,100 @@ async function main() {
     await page.waitForTimeout(1500);
 
     await page.screenshot({ path: path.join(SCREENSHOTS_DIR, 'admin-commit-success.png') });
-    console.log('✅ Atomic commit executed and confirmed.');
+    console.log('✅ Desktop Atomic commit executed and confirmed.');
+    await desktopContext.close();
 
-    console.log('\n🎉 ALL E2E SITES ADMIN PLAYWRIGHT TESTS PASSED SUCCESSFULLY!');
+    // ----------------------------------------------------
+    // PHASE 2: Mobile Phone Viewport (iPhone 14 / Android: 390 x 844)
+    // ----------------------------------------------------
+    console.log('\n--- Testing Mobile Phone Viewport (390 x 844) ---');
+    const mobileContext = await browser.newContext({
+      viewport: { width: 390, height: 844 },
+      isMobile: true,
+      hasTouch: true,
+    });
+    const mobilePage = await mobileContext.newPage();
+
+    // Activate mock store on mobile context
+    await mobilePage.goto(`http://127.0.0.1:${ADMIN_PORT}/settings/`);
+    await mobilePage.waitForLoadState('networkidle');
+    await mobilePage.click('text=Use Demo / Mock Store');
+    await mobilePage.waitForTimeout(500);
+
+    // Set preview override
+    await mobilePage.evaluate(({ STUB_PORT }) => {
+      localStorage.setItem('preview_override_bmi-calculator', `http://127.0.0.1:${STUB_PORT}`);
+    }, { STUB_PORT });
+
+    // Visit Dashboard on Mobile
+    console.log('Testing Mobile Dashboard...');
+    await mobilePage.goto(`http://127.0.0.1:${ADMIN_PORT}/`);
+    await mobilePage.waitForLoadState('networkidle');
+    await mobilePage.waitForTimeout(1000);
+
+    // Verify Hamburger Navigation
+    console.log('Testing Mobile Navigation Hamburger menu...');
+    await mobilePage.click('button[aria-label="Toggle navigation menu"]');
+    await mobilePage.waitForTimeout(400);
+    await mobilePage.screenshot({ path: path.join(SCREENSHOTS_DIR, 'admin-mobile-nav-open.png') });
+
+    // Close menu by clicking Dashboard
+    await mobilePage.click('div.md\\:hidden a:has-text("Dashboard")');
+    await mobilePage.waitForTimeout(400);
+
+    // Take Mobile Dashboard screenshot (showing responsive cards)
+    await mobilePage.screenshot({ path: path.join(SCREENSHOTS_DIR, 'admin-mobile-dashboard.png') });
+    console.log('✅ Mobile Dashboard rendered with responsive site cards & hamburger menu.');
+
+    // Visit Site Editor on Mobile
+    console.log('Testing Mobile Site Editor & Segmented Toggle...');
+    await mobilePage.goto(`http://127.0.0.1:${ADMIN_PORT}/site/?slug=bmi-calculator`);
+    await mobilePage.waitForLoadState('networkidle');
+    await mobilePage.waitForTimeout(1000);
+
+    // By default on mobile, Content Editor view is active
+    await mobilePage.screenshot({ path: path.join(SCREENSHOTS_DIR, 'admin-mobile-editor.png') });
+
+    // Switch to Live Preview via mobile segmented toggle
+    await mobilePage.click('button:has-text("Live Preview")');
+    await mobilePage.waitForTimeout(1000);
+    await mobilePage.screenshot({ path: path.join(SCREENSHOTS_DIR, 'admin-mobile-preview.png') });
+    console.log('✅ Mobile Site Editor verified: seamless toggle between Editor and Live Preview.');
+
+    await mobileContext.close();
+
+    // ----------------------------------------------------
+    // PHASE 3: Tablet Viewport (iPad: 768 x 1024)
+    // ----------------------------------------------------
+    console.log('\n--- Testing Tablet Viewport (768 x 1024) ---');
+    const tabletContext = await browser.newContext({
+      viewport: { width: 768, height: 1024 },
+      isMobile: true,
+      hasTouch: true,
+    });
+    const tabletPage = await tabletContext.newPage();
+
+    await tabletPage.goto(`http://127.0.0.1:${ADMIN_PORT}/settings/`);
+    await tabletPage.waitForLoadState('networkidle');
+    await tabletPage.click('text=Use Demo / Mock Store');
+    await tabletPage.waitForTimeout(500);
+
+    // Tablet Dashboard
+    await tabletPage.goto(`http://127.0.0.1:${ADMIN_PORT}/`);
+    await tabletPage.waitForLoadState('networkidle');
+    await tabletPage.waitForTimeout(800);
+    await tabletPage.screenshot({ path: path.join(SCREENSHOTS_DIR, 'admin-tablet-dashboard.png') });
+
+    // Tablet Site Editor
+    await tabletPage.goto(`http://127.0.0.1:${ADMIN_PORT}/site/?slug=bmi-calculator`);
+    await tabletPage.waitForLoadState('networkidle');
+    await tabletPage.waitForTimeout(1000);
+    await tabletPage.screenshot({ path: path.join(SCREENSHOTS_DIR, 'admin-tablet-editor.png') });
+    console.log('✅ Tablet Viewport verified.');
+
+    await tabletContext.close();
+
+    console.log('\n🎉 ALL RESPONSIVE TESTS PASSED ACROSS MOBILE, TABLET & DESKTOP!');
   } finally {
     await browser.close();
     adminServer.close();
@@ -234,7 +326,6 @@ async function main() {
 }
 
 main().catch((err) => {
-  console.error('E2E Test Failed:', err);
+  console.error('Responsive E2E Test Failed:', err);
   process.exit(1);
 });
-

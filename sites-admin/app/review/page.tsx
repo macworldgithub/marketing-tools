@@ -319,9 +319,9 @@ export default function ReviewScreenPage() {
   return (
     <div className="max-w-4xl mx-auto space-y-6 py-4">
       {/* Top Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
         <div>
-          <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <h1 className="text-lg sm:text-xl font-bold tracking-tight text-slate-900 dark:text-white">
             Review Pending Changes
           </h1>
           <p className="text-xs text-slate-500">
@@ -343,7 +343,7 @@ export default function ReviewScreenPage() {
             type="button"
             disabled={totalErrors > 0}
             onClick={() => setIsConfirmOpen(true)}
-            className="inline-flex items-center gap-1.5 px-5 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white rounded-md text-xs font-semibold shadow-xs"
+            className="inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-slate-300 text-white rounded-md text-xs font-semibold shadow-xs"
           >
             <GitCommit className="w-3.5 h-3.5" />
             <span>Commit Changes...</span>

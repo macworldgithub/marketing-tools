@@ -26,6 +26,7 @@
 - GitHub Personal Access Tokens are kept in memory by default, and optionally encrypted client-side using WebCrypto AES-GCM (256-bit) with PBKDF2 (600,000 iterations) stored in IndexedDB; plaintext tokens are never written to localStorage or transmitted to any server.
 - Atomic multi-file commits are performed via the GitHub Git Data API (`/git/blobs` -> `/git/trees` -> `/git/commits` -> `/git/refs`) to ensure multiple file updates across sites succeed or fail as a single atomic revision.
 - Legal templates strictly disallow h1 headings in markdown bodies (reserving h1 for page layout titles) and enforce h2/h3 depth limits alongside required standard privacy sections.
+- Sites Admin implements responsive adaptive layouts for mobile phones (iPhone/Android 360-428px), tablets (768-1024px), and laptops/desktops (1280px+), using collapsible navigation drawer, mobile card views with batch actions on small screens, and segmented editor/live-preview view toggling on viewport widths under 1024px.
 
 
 

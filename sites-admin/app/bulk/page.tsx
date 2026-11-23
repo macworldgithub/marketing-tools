@@ -257,7 +257,7 @@ function BulkOperationsInner() {
       </div>
 
       {/* Action Configuration Body */}
-      <div className="p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-xs space-y-4 text-xs">
+      <div className="p-4 sm:p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-xs space-y-4 text-xs">
         {/* 1. Find & Replace */}
         {action === 'find-replace' && (
           <div className="space-y-4">

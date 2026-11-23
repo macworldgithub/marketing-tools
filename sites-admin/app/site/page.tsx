@@ -27,11 +27,15 @@ import {
   Shield,
   FileText,
   Info,
+  Smartphone,
+  Eye,
+  Edit3,
 } from 'lucide-react';
 import Link from 'next/link';
 import ReactMarkdown from 'react-markdown';
 
 type TabType = 'faqs' | 'privacy' | 'terms' | 'settings' | 'explainer';
+type MobileView = 'editor' | 'preview';
 
 function SiteEditorInner() {
   const searchParams = useSearchParams();
@@ -43,6 +47,7 @@ function SiteEditorInner() {
   const [activeTab, setActiveTab] = useState<TabType>('faqs');
   const [activePage, setActivePage] = useState<PreviewPageType>('faqs');
   const [focusId, setFocusId] = useState<string>('');
+  const [mobileView, setMobileView] = useState<MobileView>('editor');
 
   // Clean site data loaded from store
   const [cleanContent, setCleanContent] = useState<SiteContent | null>(null);
@@ -101,102 +106,135 @@ function SiteEditorInner() {
     loadSiteData();
   }, [slug]);
 
-  // Tab change also sets preview page
+  // Synchronize active preview page with active editor tab
   const handleTabChange = (tab: TabType) => {
     setActiveTab(tab);
     if (tab === 'faqs') setActivePage('faqs');
     else if (tab === 'privacy') setActivePage('privacy');
     else if (tab === 'terms') setActivePage('terms');
-    else setActivePage('home');
   };
 
-  // Bump effective date helper
+  // Bump effective date to today (YYYY-MM-DD)
   const handleBumpDate = () => {
-    if (!draftSite) return;
     const today = new Date().toISOString().slice(0, 10);
-    setDraftSite({ ...draftSite, effectiveDate: today });
-    setHasUnsaved(true);
+    if (draftSite) {
+      setDraftSite({ ...draftSite, effectiveDate: today });
+      setHasUnsaved(true);
+    }
   };
 
-  // Copy FAQ to target sites
-  const handleCopyFaqToSites = async (item: any, targets: string[]) => {
-    for (const targetSlug of targets) {
-      const pendingFaqs = await getPendingChange(`${targetSlug}/content/faqs.json`);
-      let faqsData: FaqsData;
-      if (pendingFaqs) {
-        faqsData = JSON.parse(pendingFaqs.content);
-      } else {
-        const store = getActiveStore() || new MockStore();
-        const content = await store.readSiteContent(targetSlug);
-        faqsData = content.faqs;
-      }
+  // Copy an FAQ item to other sites
+  const handleCopyFaqToSites = async (faqItem: any, targetSlugs: string[]) => {
+    let store = getActiveStore();
+    if (!store) store = new MockStore();
 
-      // Skip if id already exists
-      if (!faqsData.items.some((f) => f.id === item.id)) {
-        faqsData.items.push(item);
+    for (const target of targetSlugs) {
+      try {
+        const targetClean = await store.readSiteContent(target);
+        const existingPending = await getPendingChange(`${target}/content/faqs.json`);
+        const targetFaqs: FaqsData = existingPending
+          ? JSON.parse(existingPending.content)
+          : targetClean.faqs;
+
+        const updatedItems = targetFaqs.items.filter((i) => i.id !== faqItem.id);
+        updatedItems.push(faqItem);
+        const updatedFaqs = { ...targetFaqs, items: updatedItems };
+
         await setPendingChange(
-          `${targetSlug}/content/faqs.json`,
-          serializeFaqs(faqsData)
+          `${target}/content/faqs.json`,
+          serializeFaqs(updatedFaqs)
         );
+      } catch (err) {
+        console.error(`Failed to copy FAQ to ${target}:`, err);
       }
     }
-    alert(`Copied FAQ "${item.question.slice(0, 30)}..." to ${targets.length} site(s).`);
+    alert(`FAQ copied to ${targetSlugs.length} target sites! Changes staged in pending review.`);
   };
 
-  // Save to drafts in IndexedDB
+  // Save current drafts into IndexedDB
   const handleSaveDraft = async () => {
-    if (!draftSite || !draftFaqs || !slug) return;
+    if (!draftSite || !draftFaqs || !cleanContent) return;
 
-    await setPendingChange(`${slug}/content/site.json`, serializeSite(draftSite));
-    await setPendingChange(`${slug}/content/faqs.json`, serializeFaqs(draftFaqs));
-    await setPendingChange(`${slug}/content/privacy.md`, serializeMarkdown(draftPrivacy));
-    await setPendingChange(`${slug}/content/terms.md`, serializeMarkdown(draftTerms));
+    // Save site.json draft if modified
+    const curSite = serializeSite(draftSite);
+    const origSite = serializeSite(cleanContent.site);
+    if (curSite !== origSite) {
+      await setPendingChange(`${slug}/content/site.json`, curSite);
+    }
 
-    setHasUnsaved(true);
-  };
+    // Save faqs.json draft if modified
+    const curFaqs = serializeFaqs(draftFaqs);
+    const origFaqs = serializeFaqs(cleanContent.faqs);
+    if (curFaqs !== origFaqs) {
+      await setPendingChange(`${slug}/content/faqs.json`, curFaqs);
+    }
 
-  // Discard local changes and revert to clean head
-  const handleDiscard = async () => {
-    if (!confirm('Discard all local changes for this site? This cannot be undone.')) return;
-    if (!cleanContent) return;
+    // Save privacy.md draft if modified
+    const curPrivacy = serializeMarkdown(draftPrivacy);
+    const origPrivacy = serializeMarkdown(cleanContent.privacyMd);
+    if (curPrivacy !== origPrivacy) {
+      await setPendingChange(`${slug}/content/privacy.md`, curPrivacy);
+    }
 
-    await removePendingChange(`${slug}/content/site.json`);
-    await removePendingChange(`${slug}/content/faqs.json`);
-    await removePendingChange(`${slug}/content/privacy.md`);
-    await removePendingChange(`${slug}/content/terms.md`);
+    // Save terms.md draft if modified
+    const curTerms = serializeMarkdown(draftTerms);
+    const origTerms = serializeMarkdown(cleanContent.termsMd);
+    if (curTerms !== origTerms) {
+      await setPendingChange(`${slug}/content/terms.md`, curTerms);
+    }
 
-    setDraftSite(cleanContent.site);
-    setDraftFaqs(cleanContent.faqs);
-    setDraftPrivacy(cleanContent.privacyMd);
-    setDraftTerms(cleanContent.termsMd);
     setHasUnsaved(false);
+    alert('Draft changes successfully saved on device!');
   };
 
-  // Auto-lint messages for active editor
-  const lintMessages = useMemo(() => {
-    if (!draftSite || !draftFaqs) return [];
+  // Discard local drafts and revert to clean store content
+  const handleDiscard = async () => {
+    if (!cleanContent) return;
+    if (confirm('Discard all unsaved changes for this site?')) {
+      await removePendingChange(`${slug}/content/site.json`);
+      await removePendingChange(`${slug}/content/faqs.json`);
+      await removePendingChange(`${slug}/content/privacy.md`);
+      await removePendingChange(`${slug}/content/terms.md`);
 
-    if (activeTab === 'faqs') {
+      setDraftSite(cleanContent.site);
+      setDraftFaqs(cleanContent.faqs);
+      setDraftPrivacy(cleanContent.privacyMd);
+      setDraftTerms(cleanContent.termsMd);
+      setHasUnsaved(false);
+    }
+  };
+
+  // Run linter on active document
+  const lintMessages = useMemo(() => {
+    if (!draftSite) return [];
+    if (activeTab === 'faqs' && draftFaqs) {
       return lintFaqs(draftFaqs);
-    } else if (activeTab === 'privacy') {
+    }
+    if (activeTab === 'privacy') {
       return lintLegalMarkdown(draftPrivacy, draftSite, 'privacy');
-    } else if (activeTab === 'terms') {
+    }
+    if (activeTab === 'terms') {
       return lintLegalMarkdown(draftTerms, draftSite, 'terms');
     }
     return [];
-  }, [activeTab, draftSite, draftFaqs, draftPrivacy, draftTerms]);
-
-  const hasErrors =
-    lintMessages.some((m) => m.type === 'error') || productionErrors.length > 0;
+  }, [activeTab, draftFaqs, draftPrivacy, draftTerms, draftSite]);
 
   if (loading) {
-    return <div className="py-20 text-center text-xs text-slate-400">Loading site content...</div>;
+    return (
+      <div className="py-20 text-center text-xs text-slate-400 animate-pulse">
+        Loading site content for <span className="font-mono">{slug}</span>...
+      </div>
+    );
   }
 
   if (error || !draftSite || !draftFaqs) {
     return (
-      <div className="p-4 bg-red-50 border border-red-200 text-red-800 rounded text-xs">
-        {error || 'Site not found.'}
+      <div className="p-6 bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 rounded-lg text-xs space-y-3">
+        <h2 className="font-bold text-red-800 dark:text-red-300">Error Loading Site</h2>
+        <p className="text-red-700 dark:text-red-400">{error || 'Site not found.'}</p>
+        <Link href="/" className="inline-flex items-center gap-1 font-semibold text-blue-600 hover:underline">
+          <ArrowLeft className="w-3.5 h-3.5" /> Back to dashboard
+        </Link>
       </div>
     );
   }
@@ -204,34 +242,37 @@ function SiteEditorInner() {
   return (
     <div className="space-y-4">
       {/* Top Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
         <div className="flex items-center space-x-3">
           <Link
             href="/"
-            className="p-1 rounded text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+            className="p-1.5 rounded text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
+            title="Back to dashboard"
           >
             <ArrowLeft className="w-4 h-4" />
           </Link>
           <div>
-            <h1 className="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
-              {draftSite.siteName}
+            <h1 className="text-base sm:text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+              <span>{draftSite.siteName}</span>
               {hasUnsaved && (
-                <span className="text-[10px] bg-amber-500 text-slate-950 font-bold px-1.5 py-0.2 rounded">
+                <span className="text-[10px] bg-amber-500 text-slate-950 font-bold px-1.5 py-0.5 rounded shadow-xs">
                   Unsaved draft
                 </span>
               )}
             </h1>
-            <p className="text-xs text-slate-400 font-mono">{slug} · {draftSite.domain}</p>
+            <p className="text-[11px] sm:text-xs text-slate-400 font-mono truncate max-w-[280px] sm:max-w-none">
+              {slug} · {draftSite.domain}
+            </p>
           </div>
         </div>
 
         {/* Action buttons */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
           {hasUnsaved && (
             <button
               type="button"
               onClick={handleDiscard}
-              className="inline-flex items-center gap-1 px-3 py-1.5 rounded text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded text-xs font-medium text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 shrink-0"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Discard</span>
@@ -241,7 +282,7 @@ function SiteEditorInner() {
           <button
             type="button"
             onClick={handleSaveDraft}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 text-slate-700 dark:text-slate-200 rounded-md text-xs font-semibold shadow-xs"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 hover:bg-slate-50 text-slate-700 dark:text-slate-200 rounded-md text-xs font-semibold shadow-xs shrink-0"
           >
             <Save className="w-3.5 h-3.5 text-blue-600" />
             <span>Save Draft</span>
@@ -249,7 +290,7 @@ function SiteEditorInner() {
 
           <Link
             href="/review/"
-            className="inline-flex items-center gap-1.5 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-xs font-semibold shadow-xs"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-xs font-semibold shadow-xs shrink-0"
           >
             <GitCommit className="w-3.5 h-3.5" />
             <span>Review & Commit</span>
@@ -257,12 +298,12 @@ function SiteEditorInner() {
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="flex space-x-1 border-b border-slate-200 dark:border-slate-800 text-xs">
+      {/* Tabs (Horizontal scrolling on mobile) */}
+      <div className="flex space-x-1 border-b border-slate-200 dark:border-slate-800 text-xs overflow-x-auto whitespace-nowrap pb-1">
         <button
           type="button"
           onClick={() => handleTabChange('faqs')}
-          className={`flex items-center gap-1.5 px-3 py-2 border-b-2 font-medium transition-colors ${
+          className={`flex items-center gap-1.5 px-3 py-2 border-b-2 font-medium transition-colors shrink-0 ${
             activeTab === 'faqs'
               ? 'border-blue-600 text-blue-600 dark:text-blue-400'
               : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900'
@@ -275,7 +316,7 @@ function SiteEditorInner() {
         <button
           type="button"
           onClick={() => handleTabChange('privacy')}
-          className={`flex items-center gap-1.5 px-3 py-2 border-b-2 font-medium transition-colors ${
+          className={`flex items-center gap-1.5 px-3 py-2 border-b-2 font-medium transition-colors shrink-0 ${
             activeTab === 'privacy'
               ? 'border-blue-600 text-blue-600 dark:text-blue-400'
               : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900'
@@ -288,7 +329,7 @@ function SiteEditorInner() {
         <button
           type="button"
           onClick={() => handleTabChange('terms')}
-          className={`flex items-center gap-1.5 px-3 py-2 border-b-2 font-medium transition-colors ${
+          className={`flex items-center gap-1.5 px-3 py-2 border-b-2 font-medium transition-colors shrink-0 ${
             activeTab === 'terms'
               ? 'border-blue-600 text-blue-600 dark:text-blue-400'
               : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900'
@@ -301,7 +342,7 @@ function SiteEditorInner() {
         <button
           type="button"
           onClick={() => handleTabChange('settings')}
-          className={`flex items-center gap-1.5 px-3 py-2 border-b-2 font-medium transition-colors ${
+          className={`flex items-center gap-1.5 px-3 py-2 border-b-2 font-medium transition-colors shrink-0 ${
             activeTab === 'settings'
               ? 'border-blue-600 text-blue-600 dark:text-blue-400'
               : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900'
@@ -314,7 +355,7 @@ function SiteEditorInner() {
         <button
           type="button"
           onClick={() => handleTabChange('explainer')}
-          className={`flex items-center gap-1.5 px-3 py-2 border-b-2 font-medium transition-colors ${
+          className={`flex items-center gap-1.5 px-3 py-2 border-b-2 font-medium transition-colors shrink-0 ${
             activeTab === 'explainer'
               ? 'border-blue-600 text-blue-600 dark:text-blue-400'
               : 'border-transparent text-slate-600 dark:text-slate-400 hover:text-slate-900'
@@ -325,10 +366,38 @@ function SiteEditorInner() {
         </button>
       </div>
 
+      {/* Mobile / Tablet Segmented Toggle (< lg) */}
+      <div className="lg:hidden flex items-center justify-center p-1 bg-slate-200/80 dark:bg-slate-800/80 rounded-lg text-xs font-semibold">
+        <button
+          type="button"
+          onClick={() => setMobileView('editor')}
+          className={`flex-1 py-1.5 px-3 rounded-md transition-all flex items-center justify-center gap-1.5 ${
+            mobileView === 'editor'
+              ? 'bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-xs'
+              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+          }`}
+        >
+          <Edit3 className="w-3.5 h-3.5" />
+          <span>Content Editor</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setMobileView('preview')}
+          className={`flex-1 py-1.5 px-3 rounded-md transition-all flex items-center justify-center gap-1.5 ${
+            mobileView === 'preview'
+              ? 'bg-white dark:bg-slate-900 text-blue-600 dark:text-blue-400 shadow-xs'
+              : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+          }`}
+        >
+          <Eye className="w-3.5 h-3.5" />
+          <span>Live Preview</span>
+        </button>
+      </div>
+
       {/* Main Split View: Left = Editor & Linter, Right = Live Preview */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 min-h-[600px] items-start">
         {/* Left Column: Editor & Lint panel */}
-        <div className="space-y-4">
+        <div className={`space-y-4 ${mobileView === 'preview' ? 'hidden lg:block' : 'block'}`}>
           {activeTab === 'faqs' && (
             <FaqEditor
               faqs={draftFaqs}
@@ -349,14 +418,14 @@ function SiteEditorInner() {
           {activeTab === 'privacy' && (
             <MarkdownEditor
               value={draftPrivacy}
-              title="Privacy Policy Template (privacy.md)"
+              title="Privacy Policy (privacy.md)"
               onChange={(val) => {
                 setDraftPrivacy(val);
                 setHasUnsaved(true);
               }}
               onBumpDate={handleBumpDate}
               effectiveDate={draftSite.effectiveDate}
-              isCustomized={draftPrivacy.trim() !== baselines?.privacyMasterMd.trim()}
+              isCustomized={cleanContent?.isCustomPrivacy}
               onShowBaselineDiff={() => setShowDiffModal(true)}
             />
           )}
@@ -364,25 +433,23 @@ function SiteEditorInner() {
           {activeTab === 'terms' && (
             <MarkdownEditor
               value={draftTerms}
-              title="Terms of Service Template (terms.md)"
+              title="Terms of Service (terms.md)"
               onChange={(val) => {
                 setDraftTerms(val);
                 setHasUnsaved(true);
               }}
               onBumpDate={handleBumpDate}
               effectiveDate={draftSite.effectiveDate}
-              isCustomized={draftTerms.trim() !== baselines?.termsMasterMd.trim()}
+              isCustomized={cleanContent?.isCustomTerms}
               onShowBaselineDiff={() => setShowDiffModal(true)}
             />
           )}
 
           {activeTab === 'settings' && (
-            <div className="p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg space-y-4 text-xs">
-              <h2 className="font-bold text-sm text-slate-900 dark:text-white pb-2 border-b border-slate-200 dark:border-slate-800">
-                Site Metadata & Feature Flags
-              </h2>
+            <div className="p-4 sm:p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg space-y-4 text-xs">
+              <h2 className="text-sm font-bold text-slate-900 dark:text-white">Site Settings (content/site.json)</h2>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="font-semibold text-slate-700 dark:text-slate-300">Site Name</label>
                   <input
@@ -409,7 +476,7 @@ function SiteEditorInner() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="font-semibold text-slate-700 dark:text-slate-300">Domain</label>
                   <input
@@ -436,7 +503,7 @@ function SiteEditorInner() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <label className="font-semibold text-slate-700 dark:text-slate-300">Effective Date</label>
                   <input
@@ -468,7 +535,7 @@ function SiteEditorInner() {
 
               <div className="pt-2 border-t border-slate-200 dark:border-slate-800 space-y-2">
                 <label className="font-semibold text-slate-700 dark:text-slate-300">Features & Policy Flags</label>
-                <div className="flex gap-6">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-6">
                   <label className="flex items-center gap-1.5 cursor-pointer">
                     <input
                       type="checkbox"
@@ -508,7 +575,7 @@ function SiteEditorInner() {
           )}
 
           {activeTab === 'explainer' && (
-            <div className="p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg space-y-4">
+            <div className="p-4 sm:p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
                 <h2 className="text-sm font-bold text-slate-900 dark:text-white">Explainer Content (explainer.md)</h2>
                 <span className="text-xs text-slate-400">Read-only in v1</span>
@@ -524,7 +591,7 @@ function SiteEditorInner() {
         </div>
 
         {/* Right Column: Live Preview on real site */}
-        <div className="h-[750px]">
+        <div className={`h-[650px] sm:h-[750px] lg:h-[800px] ${mobileView === 'editor' ? 'hidden lg:block' : 'block'}`}>
           <LivePreview
             site={draftSite}
             faqs={draftFaqs}
@@ -539,16 +606,16 @@ function SiteEditorInner() {
 
       {/* Baseline Diff Modal */}
       {showDiffModal && baselines && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-xl max-w-3xl w-full p-4 space-y-3 max-h-[85vh] flex flex-col">
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-2 sm:p-4">
+          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-xl max-w-3xl w-full p-4 space-y-3 max-h-[90vh] flex flex-col">
             <div className="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
-              <h2 className="text-sm font-bold">
+              <h2 className="text-xs sm:text-sm font-bold truncate">
                 Diff against baseline: {activeTab === 'privacy' ? 'privacy.master.md' : 'terms.master.md'}
               </h2>
               <button
                 type="button"
                 onClick={() => setShowDiffModal(false)}
-                className="text-xs px-2 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200"
+                className="text-xs px-2.5 py-1 rounded bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 shrink-0"
               >
                 Close
               </button>
@@ -575,4 +642,3 @@ export default function SiteEditorPage() {
     </Suspense>
   );
 }
-

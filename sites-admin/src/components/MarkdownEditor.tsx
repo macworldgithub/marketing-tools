@@ -236,12 +236,12 @@ export const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
           onChange={(e) => onChange(e.target.value)}
           placeholder="Write policy template in Markdown..."
           spellCheck={false}
-          className="flex-1 w-full p-4 font-mono text-xs leading-relaxed bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none resize-none"
+          className="flex-1 w-full p-3 sm:p-4 font-mono text-xs leading-relaxed bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 focus:outline-none resize-none min-h-[320px] sm:min-h-[450px]"
         />
       </div>
 
       {/* Footer bar */}
-      <div className="px-3 py-1.5 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-[11px] text-slate-500 flex justify-between items-center">
+      <div className="px-3 py-1.5 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 text-[11px] text-slate-500 flex flex-wrap justify-between items-center gap-1">
         <div>
           <span>{words} words</span> · <span>{chars} characters</span>
         </div>

@@ -27,7 +27,7 @@ export default function RootLayout({
     <html lang="en" className={inter.variable}>
       <body className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col font-sans antialiased">
         <Navigation />
-        <main className="flex-1 max-w-[1400px] w-full mx-auto px-4 sm:px-6 py-6">
+        <main className="flex-1 max-w-[1400px] w-full mx-auto px-3 sm:px-6 py-4 sm:py-6">
           {children}
         </main>
       </body>

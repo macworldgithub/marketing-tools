@@ -15,6 +15,8 @@ import {
   ArrowRight,
   ShieldAlert,
   ExternalLink,
+  HelpCircle,
+  Calendar,
 } from 'lucide-react';
 
 export default function DashboardPage() {
@@ -97,7 +99,7 @@ export default function DashboardPage() {
 
   if (!loading && sites.length === 0 && !error) {
     return (
-      <div className="max-w-md mx-auto text-center py-16 space-y-4">
+      <div className="max-w-md mx-auto text-center py-16 px-4 space-y-4">
         <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/40 text-blue-600 rounded-full flex items-center justify-center mx-auto">
           <Layers className="w-6 h-6" />
         </div>
@@ -121,9 +123,9 @@ export default function DashboardPage() {
   return (
     <div className="space-y-4">
       {/* Top Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+          <h1 className="text-lg sm:text-xl font-bold tracking-tight text-slate-900 dark:text-white">
             Tool Sites Dashboard
           </h1>
           <p className="text-xs text-slate-500">
@@ -146,7 +148,7 @@ export default function DashboardPage() {
             type="button"
             onClick={loadData}
             title="Refresh repository content"
-            className="p-1.5 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-50 text-xs"
+            className="p-2 sm:p-1.5 rounded-md border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-50 text-xs"
           >
             <RotateCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
           </button>
@@ -154,31 +156,47 @@ export default function DashboardPage() {
       </div>
 
       {/* Search and Filters */}
-      <div className="flex flex-wrap items-center justify-between gap-3 p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs">
-        <div className="relative flex-1 min-w-[240px]">
-          <Search className="w-4 h-4 absolute left-2.5 top-2 text-slate-400" />
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs">
+        <div className="relative flex-1 w-full">
+          <Search className="w-4 h-4 absolute left-2.5 top-2.5 text-slate-400" />
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by slug, site name, or domain..."
-            className="w-full pl-8 pr-3 py-1 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-xs"
+            className="w-full pl-8 pr-3 py-1.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 text-xs"
           />
         </div>
 
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-between sm:justify-end space-x-3 text-xs">
           <label className="flex items-center gap-1.5 text-slate-600 dark:text-slate-300 cursor-pointer">
             <input
               type="checkbox"
               checked={filterCustomOnly}
               onChange={(e) => setFilterCustomOnly(e.target.checked)}
-              className="rounded text-blue-600"
+              className="rounded text-blue-600 w-4 h-4"
             />
-            <span>Customised policies only</span>
+            <span className="text-[11px] sm:text-xs">Customised only</span>
           </label>
-          <span className="text-slate-400">|</span>
-          <span className="text-slate-500 font-medium">{filteredSites.length} sites shown</span>
+          <span className="text-slate-300 dark:text-slate-700">|</span>
+          <span className="text-slate-500 font-medium text-[11px] sm:text-xs">{filteredSites.length} sites</span>
         </div>
+      </div>
+
+      {/* Select All on Mobile bar */}
+      <div className="md:hidden flex items-center justify-between px-1 text-xs text-slate-600 dark:text-slate-400">
+        <label className="flex items-center gap-2 cursor-pointer font-medium">
+          <input
+            type="checkbox"
+            checked={selectedSlugs.length > 0 && selectedSlugs.length === filteredSites.length}
+            onChange={toggleSelectAll}
+            className="rounded text-blue-600 w-4 h-4"
+          />
+          <span>Select all {filteredSites.length} sites</span>
+        </label>
+        {selectedSlugs.length > 0 && (
+          <span className="text-blue-600 dark:text-blue-400 font-semibold">{selectedSlugs.length} selected</span>
+        )}
       </div>
 
       {/* Error state */}
@@ -189,8 +207,104 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* Table */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg overflow-x-auto shadow-xs">
+      {/* MOBILE CARD VIEW (Phones < 768px) */}
+      <div className="block md:hidden space-y-3">
+        {filteredSites.map((item) => {
+          const isSelected = selectedSlugs.includes(item.slug);
+          const hasPending = pendingSites.has(item.slug);
+          const hasPlaceholder =
+            item.site.domain.includes('TODO') || item.site.contactEmail.includes('TODO');
+
+          return (
+            <div
+              key={item.slug}
+              className={`p-3.5 rounded-lg border transition-all ${
+                isSelected
+                  ? 'bg-blue-50/60 dark:bg-blue-950/30 border-blue-300 dark:border-blue-700 shadow-xs'
+                  : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 shadow-xs'
+              }`}
+            >
+              <div className="flex items-start justify-between gap-2">
+                <div className="flex items-start gap-2.5">
+                  <input
+                    type="checkbox"
+                    checked={isSelected}
+                    onChange={() => toggleSelectSlug(item.slug)}
+                    className="mt-1 rounded text-blue-600 w-4 h-4"
+                  />
+                  <div>
+                    <Link
+                      href={`/site/?slug=${item.slug}`}
+                      className="font-bold text-sm text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400"
+                    >
+                      {item.site.siteName}
+                    </Link>
+                    <div className="text-[11px] font-mono text-slate-400">{item.slug}</div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col items-end gap-1">
+                  {hasPending && (
+                    <span className="text-[10px] bg-amber-500 text-slate-950 font-bold px-1.5 py-0.5 rounded shadow-xs">
+                      Unsaved
+                    </span>
+                  )}
+                  {(item.isCustomPrivacy || item.isCustomTerms) && (
+                    <span className="text-[10px] font-semibold bg-purple-50 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800 px-1.5 py-0.5 rounded">
+                      Custom
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Domain & Meta */}
+              <div className="mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-800/80 flex flex-wrap items-center justify-between gap-2 text-xs">
+                <div className="flex items-center gap-1.5 font-mono text-slate-600 dark:text-slate-300">
+                  <span>{item.site.domain}</span>
+                  {hasPlaceholder && (
+                    <span title="Placeholder detected">
+                      <ShieldAlert className="w-3.5 h-3.5 text-amber-500" />
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-1.5">
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-[11px] font-medium">
+                    <HelpCircle className="w-3 h-3 text-slate-400" />
+                    {item.faqs.items.length} FAQs
+                  </span>
+                </div>
+              </div>
+
+              {/* Features & Action Footer */}
+              <div className="mt-2.5 pt-2 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between">
+                <div className="flex items-center gap-1.5 text-[10px] text-slate-500">
+                  {item.site.features.ads && (
+                    <span className="px-1.5 py-0.5 rounded bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-300">
+                      Ads
+                    </span>
+                  )}
+                  <span className="px-1.5 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                    {item.site.features.analytics}
+                  </span>
+                  <span className="font-mono text-slate-400">{item.site.effectiveDate}</span>
+                </div>
+
+                <Link
+                  href={`/site/?slug=${item.slug}`}
+                  className="inline-flex items-center gap-1 px-3 py-1.5 rounded-md bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 dark:hover:bg-blue-900 text-blue-700 dark:text-blue-300 font-semibold text-xs transition-colors"
+                >
+                  <span>Edit</span>
+                  <ArrowRight className="w-3 h-3" />
+                </Link>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* DESKTOP / TABLET TABLE VIEW (≥ 768px) */}
+      <div className="hidden md:block bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg overflow-x-auto shadow-xs">
         <table className="w-full text-left text-xs divide-y divide-slate-200 dark:divide-slate-800">
           <thead className="bg-slate-50 dark:bg-slate-950/60 text-slate-600 dark:text-slate-400 font-semibold">
             <tr>
@@ -199,7 +313,7 @@ export default function DashboardPage() {
                   type="checkbox"
                   checked={selectedSlugs.length > 0 && selectedSlugs.length === filteredSites.length}
                   onChange={toggleSelectAll}
-                  className="rounded text-blue-600"
+                  className="rounded text-blue-600 w-4 h-4"
                 />
               </th>
               <th className="py-2.5 px-3">Site / Tool Name</th>
@@ -231,7 +345,7 @@ export default function DashboardPage() {
                       type="checkbox"
                       checked={isSelected}
                       onChange={() => toggleSelectSlug(item.slug)}
-                      className="rounded text-blue-600"
+                      className="rounded text-blue-600 w-4 h-4"
                     />
                   </td>
 
@@ -341,4 +455,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-

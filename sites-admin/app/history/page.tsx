@@ -73,7 +73,7 @@ function HistoryInner() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-6 py-4">
-      <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
         <div className="flex items-center space-x-3">
           <Link
             href={slug ? `/site/?slug=${slug}` : '/'}
@@ -137,7 +137,7 @@ function HistoryInner() {
           <div className="md:col-span-2 space-y-4">
             {selectedCommit ? (
               <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4 space-y-4">
-                <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-200 dark:border-slate-800">
                   <div>
                     <h3 className="text-xs font-bold text-slate-900 dark:text-white">
                       Comparing Current vs Commit {selectedCommit.slice(0, 7)}

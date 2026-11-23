@@ -116,14 +116,14 @@ const SortableFaqItem: React.FC<SortableFaqItemProps> = ({
             <GripVertical className="w-4 h-4" />
           </button>
           <span className="text-xs font-semibold text-slate-400">#{index + 1}</span>
-          <div className="flex-1 flex items-center gap-2">
+          <div className="flex-1 flex items-center gap-1.5 sm:gap-2">
             <span className="text-[11px] font-mono text-slate-400">id:</span>
             <input
               type="text"
               value={item.id}
               onChange={handleIdChange}
               placeholder="kebab-case-id"
-              className="text-xs font-mono px-2 py-0.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded w-48 focus:outline-none"
+              className="text-xs font-mono px-2 py-0.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded w-28 sm:w-48 max-w-[160px] sm:max-w-none focus:outline-none"
             />
           </div>
         </div>

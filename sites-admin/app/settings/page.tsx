@@ -240,7 +240,7 @@ export default function SettingsPage() {
       )}
 
       {/* Connection form */}
-      <form onSubmit={handleConnect} className="p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-xs space-y-5">
+      <form onSubmit={handleConnect} className="p-4 sm:p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg shadow-xs space-y-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-1">
             <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">GitHub Owner / Org</label>

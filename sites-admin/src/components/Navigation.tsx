@@ -14,6 +14,8 @@ import {
   LogOut,
   Moon,
   Sun,
+  Menu,
+  X,
 } from 'lucide-react';
 
 export const Navigation: React.FC = () => {
@@ -21,6 +23,7 @@ export const Navigation: React.FC = () => {
   const [pendingCount, setPendingCount] = useState<number>(0);
   const [isDark, setIsDark] = useState<boolean>(false);
   const [hasConnection, setHasConnection] = useState<boolean>(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   useEffect(() => {
     // Check dark mode
@@ -43,6 +46,11 @@ export const Navigation: React.FC = () => {
     const interval = setInterval(refreshPending, 2000);
     return () => clearInterval(interval);
   }, []);
+
+  // Close mobile menu whenever pathname changes
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   const toggleTheme = () => {
     if (isDark) {
@@ -70,15 +78,25 @@ export const Navigation: React.FC = () => {
 
   return (
     <header className="sticky top-0 z-40 bg-white dark:bg-slate-950 border-b border-slate-200 dark:border-slate-800">
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
-        {/* Brand */}
-        <div className="flex items-center space-x-6">
+      <div className="max-w-[1400px] mx-auto px-3 sm:px-6 h-14 flex items-center justify-between">
+        {/* Brand & Desktop Links */}
+        <div className="flex items-center space-x-3 sm:space-x-6">
+          {/* Mobile hamburger menu toggle */}
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 rounded-md text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none"
+            aria-label="Toggle navigation menu"
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+
           <Link href="/" className="font-bold text-sm tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-blue-600"></span>
-            Sites Admin
+            <span>Sites Admin</span>
           </Link>
 
-          {/* Links */}
+          {/* Desktop Nav Links */}
           <nav className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => {
               const active = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
@@ -102,15 +120,16 @@ export const Navigation: React.FC = () => {
         </div>
 
         {/* Right controls */}
-        <div className="flex items-center space-x-3 text-xs">
+        <div className="flex items-center space-x-2 sm:space-x-3 text-xs">
           {/* Pending Changes badge */}
           {pendingCount > 0 && (
             <Link
               href="/review/"
-              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold tracking-tight shadow-xs transition-all"
+              className="inline-flex items-center gap-1.5 px-2 sm:px-2.5 py-1 rounded-md bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold tracking-tight shadow-xs transition-all"
             >
               <GitCommit className="w-3.5 h-3.5" />
-              <span>Review & Save ({pendingCount})</span>
+              <span className="hidden sm:inline">Review & Save ({pendingCount})</span>
+              <span className="sm:hidden">Save ({pendingCount})</span>
             </Link>
           )}
 
@@ -137,7 +156,31 @@ export const Navigation: React.FC = () => {
           )}
         </div>
       </div>
+
+      {/* Mobile Nav Drawer */}
+      {mobileMenuOpen && (
+        <div className="md:hidden border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950 px-3 py-2 space-y-1 shadow-lg">
+          {navItems.map((item) => {
+            const active = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`flex items-center gap-2.5 px-3 py-2.5 rounded-md text-xs font-medium transition-colors ${
+                  active
+                    ? 'bg-blue-50 dark:bg-blue-950/50 text-blue-700 dark:text-blue-300 font-semibold'
+                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-slate-900 dark:hover:text-white'
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                <span>{item.label}</span>
+              </Link>
+            );
+          })}
+        </div>
+      )}
     </header>
   );
 };
-
