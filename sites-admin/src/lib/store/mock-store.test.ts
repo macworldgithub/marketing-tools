@@ -9,7 +9,7 @@ describe('Mock Store & Fixtures Contract', () => {
   const fixturesDir = path.resolve(__dirname, '../../../tests/fixtures');
 
   function loadFixturesIntoStore(): MockStore {
-    const store = new MockStore();
+    const store = new MockStore({});
     const slugs = ['bmi-calculator', 'loan-calculator', 'qr-code-generator'];
 
     // Load _shared baselines
@@ -34,6 +34,14 @@ describe('Mock Store & Fixtures Contract', () => {
     const store = loadFixturesIntoStore();
     const sites = await store.listSites();
     expect(sites).toEqual(['bmi-calculator', 'loan-calculator', 'qr-code-generator']);
+  });
+
+  it('discovers all 23 default repository sites when initialized without parameters', async () => {
+    const store = new MockStore();
+    const sites = await store.listSites();
+    expect(sites.length).toBe(23);
+    expect(sites).toContain('bmi-calculator');
+    expect(sites).toContain('address-generator');
   });
 
   it('loads and validates all content for each fixture site', async () => {

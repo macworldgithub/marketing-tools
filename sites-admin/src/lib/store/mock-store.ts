@@ -16,7 +16,7 @@ export class MockStore implements ContentStore {
   private baseCommitSha = 'mock-initial-commit-sha';
 
   constructor(initialFiles?: Record<string, string>) {
-    const source = initialFiles && Object.keys(initialFiles).length > 0 ? initialFiles : DEFAULT_MOCK_FILES;
+    const source = initialFiles !== undefined ? initialFiles : DEFAULT_MOCK_FILES;
     for (const [p, c] of Object.entries(source)) {
       this.files.set(p, c);
     }

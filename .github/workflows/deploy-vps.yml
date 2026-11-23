@@ -32,8 +32,19 @@ jobs:
           echo "Detected changed sites: $CHANGED"
           echo "sites=$CHANGED" >> $GITHUB_OUTPUT
 
+      - name: Check VPS Configuration
+        id: vps_check
+        run: |
+          if [ -z "${{ secrets.VPS_HOST }}" ] || [ -z "${{ secrets.VPS_SSH_KEY }}" ]; then
+            echo "configured=false" >> $GITHUB_OUTPUT
+            echo "Notice: VPS_HOST or VPS_SSH_KEY secrets are not configured in GitHub repository secrets."
+            echo "Skipping VPS deployment. Once you add VPS_HOST, VPS_SSH_KEY, and VPS_USER secrets, deployments will run automatically."
+          else
+            echo "configured=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Build and Sync Changed Sites to VPS
-        if: steps.changes.outputs.sites != '' && env.VPS_HOST != ''
+        if: steps.changes.outputs.sites != '' && steps.vps_check.outputs.configured == 'true'
         env:
           SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_KEY }}
           VPS_HOST: ${{ secrets.VPS_HOST }}
