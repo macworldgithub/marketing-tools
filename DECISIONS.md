@@ -27,6 +27,7 @@
 - Atomic multi-file commits are performed via the GitHub Git Data API (`/git/blobs` -> `/git/trees` -> `/git/commits` -> `/git/refs`) to ensure multiple file updates across sites succeed or fail as a single atomic revision.
 - Legal templates strictly disallow h1 headings in markdown bodies (reserving h1 for page layout titles) and enforce h2/h3 depth limits alongside required standard privacy sections.
 - Sites Admin implements responsive adaptive layouts for mobile phones (iPhone/Android 360-428px), tablets (768-1024px), and laptops/desktops (1280px+), using collapsible navigation drawer, mobile card views with batch actions on small screens, and segmented editor/live-preview view toggling on viewport widths under 1024px.
+- Dedicated port allocations across 1500–1550: Sites Admin is assigned port 1500, and the 23 tool sites are assigned ports 1501–1523 deterministically in `PORTS.json`. Individual projects define `-p <port>` in dev/start scripts, Live Preview in Sites Admin auto-resolves localhost to the site's dedicated port, and `scripts/serve-all.ts` provides a high-efficiency production static cluster server across all 24 ports with zero runtime dependencies.
 
 
 

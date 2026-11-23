@@ -1,0 +1,47 @@
+# Example Nginx Reverse Proxy Configuration for ports 1500 - 1550
+# Place in /etc/nginx/sites-available/ and symlink to /etc/nginx/sites-enabled/
+
+# 1. Sites Admin (Port 1500)
+server {
+    listen 80;
+    server_name admin.yourdomain.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:1500;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+# 2. BMI Calculator (Port 1506)
+server {
+    listen 80;
+    server_name bmicalculator.com www.bmicalculator.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:1506;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+# 3. QR Code Generator (Port 1520)
+server {
+    listen 80;
+    server_name qrcodegen.com www.qrcodegen.com;
+
+    location / {
+        proxy_pass http://127.0.0.1:1520;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}

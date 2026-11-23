@@ -22,6 +22,7 @@ import {
   AlertCircle,
   HelpCircle,
 } from 'lucide-react';
+import PORTS_MAP from '../ports.json';
 
 interface LivePreviewProps {
   site: SiteConfig;
@@ -57,16 +58,21 @@ export const LivePreview: React.FC<LivePreviewProps> = ({
   const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
   const connectionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Load preview base URL override from localStorage/IndexedDB or use domain
+  // Load preview base URL override from localStorage or assigned port mapping or domain
   useEffect(() => {
     const override = localStorage.getItem(`preview_override_${site.slug}`);
+    const assignedPort = (PORTS_MAP as Record<string, number>)[site.slug];
+
     if (override) {
       setPreviewBaseUrl(override);
     } else if (site.domain && !site.domain.includes('TODO')) {
       setPreviewBaseUrl(`https://${site.domain}`);
+    } else if (assignedPort) {
+      // Automatic local fallback to assigned dedicated port in 1500-1550 range
+      setPreviewBaseUrl(`http://localhost:${assignedPort}`);
     } else {
       setPreviewBaseUrl('');
-      setStatus('fallback'); // No valid domain or override configured
+      setStatus('fallback'); // No valid domain or port configured
     }
   }, [site.slug, site.domain]);
 

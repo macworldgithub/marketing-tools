@@ -1,0 +1,62 @@
+name: Deploy Changed Sites to VPS
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy-to-vps:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # Fetches current and previous commit to detect diffs
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12.21.0
+
+      - name: Detect Changed Sites
+        id: changes
+        run: |
+          # Detect which top-level tool folders or sites-admin have changes
+          CHANGED=$(git diff --name-only HEAD~1 HEAD | grep -E '^[^/]+/(content|app|src)/' | cut -d'/' -f1 | sort -u || true)
+          echo "Detected changed sites: $CHANGED"
+          echo "sites=$CHANGED" >> $GITHUB_OUTPUT
+
+      - name: Build and Sync Changed Sites to VPS
+        if: steps.changes.outputs.sites != '' && env.VPS_HOST != ''
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.VPS_SSH_KEY }}
+          VPS_HOST: ${{ secrets.VPS_HOST }}
+          VPS_USER: ${{ secrets.VPS_USER }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H "$VPS_HOST" >> ~/.ssh/known_hosts
+
+          for SLUG in ${{ steps.changes.outputs.sites }}; do
+            if [ -d "$SLUG" ] && [ -f "$SLUG/package.json" ]; then
+              echo "----------------------------------------"
+              echo "Building: $SLUG"
+              echo "----------------------------------------"
+              cd "$SLUG"
+              pnpm install --frozen-lockfile
+              pnpm build
+
+              echo "Deploying $SLUG to $VPS_USER@$VPS_HOST:/var/www/$SLUG/ ..."
+              ssh $VPS_USER@$VPS_HOST "mkdir -p /var/www/$SLUG"
+              rsync -avz --delete out/ $VPS_USER@$VPS_HOST:/var/www/$SLUG/
+              cd ..
+              echo "Successfully deployed $SLUG to VPS!"
+            fi
+          done

@@ -80,3 +80,4 @@ collectFixtures(FIXTURES_DIR, FIXTURES_DIR);
 const tsContent = `export const DEFAULT_MOCK_FILES: Record<string, string> = ${JSON.stringify(filesToBundle, null, 2)};\n`;
 fs.writeFileSync(path.join(SITES_ADMIN_DIR, 'src', 'lib', 'store', 'default-fixtures.ts'), tsContent, 'utf-8');
 console.log(`Generated default-fixtures.ts with ${Object.keys(filesToBundle).length} files.`);
+

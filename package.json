@@ -9,7 +9,9 @@
     "validate-all": "tsx scripts/validate-all.ts",
     "verify-standalone": "tsx scripts/verify-standalone.ts",
     "each": "tsx scripts/each.ts",
-    "new-site": "tsx scripts/new-site.ts"
+    "new-site": "tsx scripts/new-site.ts",
+    "assign-ports": "tsx scripts/assign-ports.ts",
+    "serve-all": "tsx scripts/serve-all.ts"
   },
   "devDependencies": {
     "@types/node": "^22.13.0",

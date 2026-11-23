@@ -104,3 +104,4 @@ To prevent unnecessary builds across all 23 static sites whenever content change
 - **CORS Issues:** GitHub's public API (`https://api.github.com`) natively supports CORS. If using GitHub Enterprise Server behind a firewall, configure an internal reverse proxy with CORS headers.
 - **Merge Conflicts:** If remote changes occur while you are editing, `GitHubStore` automatically fetches the latest tree and rebases cleanly. If an unresolvable collision occurs, a modal offers to branch as a Pull Request.
 - **Frame-Ancestors / CSP Errors in Live Preview:** Ensure the target tool site has `NEXT_PUBLIC_PREVIEW_ADMIN_ORIGIN` set to your admin origin (e.g. `http://localhost:3000` or `https://admin.yourdomain.com`).
+
