@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "how-is-bmi-calculated",
+      "question": "How is BMI calculated?",
+      "answer": "Body Mass Index (BMI) is calculated by dividing weight in kilograms by height in meters squared: `BMI = kg / m²`. In imperial units, the formula is: `BMI = 703 × weight (lb) / height (in)²`. The constant 703 converts pounds and inches to standard metric values."
+    },
+    {
+      "id": "bmi-categories-adults",
+      "question": "What are the adult BMI categories defined by the WHO?",
+      "answer": "According to the World Health Organization (WHO), adult BMI is categorized as: Underweight (`< 18.5`), Normal weight (`18.5 – 24.9`), Overweight (`25.0 – 29.9`), Obesity Class I (`30.0 – 34.9`), Obesity Class II (`35.0 – 39.9`), and Obesity Class III (`≥ 40.0`)."
+    },
+    {
+      "id": "healthy-weight-range-calculation",
+      "question": "How is the healthy weight range for my height calculated?",
+      "answer": "The healthy weight range reflects the weights that correspond to normal BMI values (`18.5` to `24.9`) for your specific height. In metric, the minimum healthy weight is `18.5 × (height in meters)²` and the maximum is `24.9 × (height in meters)²`."
+    },
+    {
+      "id": "metric-vs-imperial-bmi",
+      "question": "What is the difference between metric and imperial BMI formulas?",
+      "answer": "Both formulas produce equivalent results. The imperial formula multiplies weight in pounds by 703 before dividing by height in inches squared to adjust for unit conversion factors between imperial units and metric meters and kilograms."
+    },
+    {
+      "id": "bmi-for-children-and-teens",
+      "question": "Why does BMI work differently for children and teenagers under 20?",
+      "answer": "For children and teens aged 2 to 19, body composition changes rapidly as they grow, and fat levels differ significantly between boys and girls. Consequently, healthcare professionals use age-and-sex-specific BMI percentiles based on growth charts rather than standard adult cutoff categories."
+    },
+    {
+      "id": "bmi-athletes-muscle",
+      "question": "Can muscular individuals and athletes rely on BMI?",
+      "answer": "BMI measures total body mass relative to height, but cannot differentiate between lean muscle mass, bone density, and adipose fat tissue. Well-conditioned athletes with high muscle mass may register as overweight or obese on BMI scales despite having very low body fat percentages."
+    },
+    {
+      "id": "is-my-data-uploaded",
+      "question": "Is my personal weight or health data uploaded to any server?",
+      "answer": "No. All calculations are executed exclusively within your browser's JavaScript engine. Your height, weight, age, and computed BMI are never transmitted over the Internet, recorded in server logs, or stored in any database."
+    },
+    {
+      "id": "bmi-limitations",
+      "question": "What are the clinical limitations of BMI?",
+      "answer": "BMI serves as a population-level screening metric rather than a diagnostic tool. It does not measure body fat distribution (such as visceral abdominal fat versus subcutaneous fat), nor does it account for ethnic variations, age-related muscle loss (sarcopenia), or individual metabolic health markers."
+    },
+    {
+      "id": "how-often-check-bmi",
+      "question": "How often should I check my BMI?",
+      "answer": "For most healthy adults, tracking BMI once every few weeks or months alongside other markers (such as waist circumference and energy levels) is sufficient. Daily fluctuations usually reflect temporary changes in hydration, sodium intake, and glycogen stores rather than changes in fat mass."
+    },
+    {
+      "id": "medical-disclaimer-advice",
+      "question": "Is this calculation considered medical advice?",
+      "answer": "No. This tool is provided solely for educational and informational screening purposes. It should not be used as a substitute for professional medical consultation, diagnosis, or clinical evaluation by a licensed physician or registered dietitian."
+    }
+  ]
+}

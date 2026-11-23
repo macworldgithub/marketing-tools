@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "items": [
+    {
+      "id": "how-does-qr-generation-work-locally",
+      "question": "How are QR codes generated entirely in the browser?",
+      "answer": "We use client-side JavaScript QR matrix encoding to generate canvas and SVG graphics directly in your browser. Your URLs, text, or contact data are never sent to external generator APIs."
+    },
+    {
+      "id": "qr-error-correction-levels",
+      "question": "What do the error correction levels (L, M, Q, H) mean?",
+      "answer": "Error correction allows QR codes to be scanned even if partially obscured or damaged: Level L recovers ~7% of data, Level M recovers ~15%, Level Q recovers ~25%, and Level H recovers ~30%. Level M is recommended for general use."
+    },
+    {
+      "id": "contrast-ratio-and-scan-reliability",
+      "question": "Why does the tool show a contrast warning?",
+      "answer": "Optical QR scanners rely on strong contrast between dark modules and a light background. Low contrast (ratio < 4.5:1) or inverted colors (white code on dark background) often fail on older phone cameras and handheld barcode scanners."
+    },
+    {
+      "id": "svg-vs-png-qr-codes",
+      "question": "Should I download PNG or SVG format?",
+      "answer": "PNG is ideal for digital screens, websites, and emails. SVG is an infinitely scalable vector format essential for high-resolution print materials, signs, stickers, and billboards without pixelation."
+    },
+    {
+      "id": "supported-content-types",
+      "question": "What content types can I encode?",
+      "answer": "You can generate QR codes for Website URLs, Plain Text, Email addresses, Phone numbers, SMS messages, and digital vCard contact cards."
+    },
+    {
+      "id": "do-these-qr-codes-ever-expire",
+      "question": "Do these QR codes ever expire?",
+      "answer": "No. These are static, direct-payload QR codes. Unlike subscription-based QR services, there is no redirect server or middleman. The code points permanently to your entered URL or text."
+    },
+    {
+      "id": "is-my-data-uploaded",
+      "question": "Is any of my encoded data saved or uploaded?",
+      "answer": "No. Everything is rendered locally inside your browser DOM. No data is stored, tracked, or transmitted."
+    },
+    {
+      "id": "recommended-qr-code-print-size",
+      "question": "What is the minimum recommended print size for a QR code?",
+      "answer": "For standard mobile scanning at arm’s length, print QR codes at least 2 × 2 cm (0.8 × 0.8 inches) with at least 4 modules of quiet zone border margin."
+    }
+  ]
+}

@@ -21,6 +21,11 @@
 - EMI calculator supports reducing-balance and flat-rate calculations with Indian Lakh/Crore (en-IN) number formatting when INR is chosen.
 - Live preview framing headers use selective header overrides on `/preview*` (`! X-Frame-Options` and `! Content-Security-Policy`) to resolve multiple-CSP header conflicts across host providers.
 - Standalone builds use localized `allowBuilds: { esbuild: true }` inside each project folder to satisfy pnpm v12 script approval policies in isolated environments while maintaining zero cross-folder workspace dependencies.
+- Storage layer is abstracted behind `ContentStore` interface (`listSites`, `readFile`, `readSiteContent`, `commitBatch`, etc.) so a database-backed store or alternative Git provider can be added without altering editors, linters, preview, or bulk tools.
+- Sites Admin uses query-string routing (`/site?slug=...`) instead of dynamic path segments (`/site/[slug]`) to maintain 100% compatibility with Next.js static HTML export (`output: 'export'`).
+- GitHub Personal Access Tokens are kept in memory by default, and optionally encrypted client-side using WebCrypto AES-GCM (256-bit) with PBKDF2 (600,000 iterations) stored in IndexedDB; plaintext tokens are never written to localStorage or transmitted to any server.
+- Atomic multi-file commits are performed via the GitHub Git Data API (`/git/blobs` -> `/git/trees` -> `/git/commits` -> `/git/refs`) to ensure multiple file updates across sites succeed or fail as a single atomic revision.
+- Legal templates strictly disallow h1 headings in markdown bodies (reserving h1 for page layout titles) and enforce h2/h3 depth limits alongside required standard privacy sections.
 
 
 

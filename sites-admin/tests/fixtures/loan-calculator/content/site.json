@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "slug": "loan-calculator",
+  "siteName": "Loan Calculator",
+  "toolName": "Loan Calculator",
+  "primaryKeyword": "loan calculator",
+  "domain": "TODO-set-domain.com",
+  "tagline": "Calculate fixed monthly loan payments, total interest, and complete amortization schedules with extra payments.",
+  "contactEmail": "TODO@TODO-set-domain.com",
+  "accent": "blue",
+  "effectiveDate": "2026-11-23",
+  "features": {
+    "ads": false,
+    "analytics": "none",
+    "localStorageKeys": [
+      "theme"
+    ]
+  }
+}

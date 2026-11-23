@@ -1,4 +1,4 @@
-# Terms of Service for {{siteName}}
+## Terms of Service for {{siteName}}
 
 **Effective Date:** {{effectiveDate}}
 

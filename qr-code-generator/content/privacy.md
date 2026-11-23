@@ -1,4 +1,4 @@
-# Privacy Policy for {{siteName}}
+## Privacy Policy for {{siteName}}
 
 **Effective Date:** {{effectiveDate}}
 
