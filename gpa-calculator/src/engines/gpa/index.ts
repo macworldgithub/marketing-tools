@@ -70,14 +70,10 @@ export function calculateGPA(
     const basePoints = GRADE_POINTS[course.grade];
     if (basePoints === null || basePoints === undefined) continue; // P/F excluded
 
-    let creditsDecimal: Decimal;
-    try {
-      creditsDecimal = new Decimal(course.credits || 0);
-    } catch {
-      continue;
-    }
-    if (creditsDecimal.lte(0)) continue; // 0 credits ignored
+    const creditsNum = Number(course.credits);
+    if (!Number.isFinite(creditsNum) || creditsNum <= 0) continue; // 0 or invalid credits ignored
 
+    const creditsDecimal = new Decimal(creditsNum);
     let pointsPerCredit = new Decimal(basePoints);
     // Weight bonus applies only to grades above F (i.e. > 0)
     if (course.level && course.level !== 'Regular' && basePoints > 0) {
@@ -102,10 +98,12 @@ export function calculateGPA(
   let cumulativeGpa: string | undefined;
   let cumulativeTotalCredits: number | undefined;
 
-  if (cumulative && cumulative.previousCredits && Number(cumulative.previousCredits) > 0) {
-    try {
-      const prevGpaDec = new Decimal(cumulative.previousGpa || 0);
-      const prevCreditsDec = new Decimal(cumulative.previousCredits);
+  if (cumulative && cumulative.previousCredits) {
+    const prevCreditsNum = Number(cumulative.previousCredits);
+    const prevGpaNum = Number(cumulative.previousGpa);
+    if (Number.isFinite(prevCreditsNum) && prevCreditsNum > 0 && Number.isFinite(prevGpaNum) && prevGpaNum >= 0) {
+      const prevGpaDec = new Decimal(prevGpaNum);
+      const prevCreditsDec = new Decimal(prevCreditsNum);
 
       const prevPoints = prevGpaDec.times(prevCreditsDec);
       const cumPoints = prevPoints.plus(totalPointsDecimal);
@@ -113,8 +111,6 @@ export function calculateGPA(
 
       cumulativeGpa = cumPoints.dividedBy(cumCredits).toFixed(2, Decimal.ROUND_HALF_UP);
       cumulativeTotalCredits = cumCredits.toNumber();
-    } catch {
-      // Ignore invalid cumulative numbers gracefully
     }
   }
 

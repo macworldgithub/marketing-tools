@@ -1,6 +1,6 @@
 {
   "source": "_template/engines/image-io",
-  "timestamp": "2026-11-24T07:10:06.375Z",
+  "timestamp": "2026-11-24T07:28:07.406Z",
   "files": {
     "index.test.ts": "aa4deea9fe8165b9214a560af244eef3868b1c7f973d4976b8f331d385dfca6f",
     "index.ts": "1b8a66a22edf7bdc290412a7f07ecb426e58c8877ee16c0bd176c96ddce52027"

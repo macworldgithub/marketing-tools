@@ -1,6 +1,6 @@
 {
   "source": "_template/core",
-  "timestamp": "2026-11-24T07:10:06.550Z",
+  "timestamp": "2026-11-24T07:28:07.595Z",
   "files": {
     "components/Breadcrumbs.tsx": "d9f50910b146d89a8c82ec4e8b3943cb053c51ee41bc9ab8d31b61a4da1edbfd",
     "components/FAQAccordion.tsx": "9084cb32c97b636bf85fbd8af031eb3f732a48dc07a96d5044b87049bfa8a704",
