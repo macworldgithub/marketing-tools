@@ -27,10 +27,27 @@ jobs:
       - name: Detect Changed Sites
         id: changes
         run: |
-          # Detect which top-level tool folders or sites-admin have changes
-          CHANGED=$(git diff --name-only HEAD~1 HEAD | grep -E '^[^/]+/(content|app|src)/' | cut -d'/' -f1 | sort -u || true)
-          echo "Detected changed sites: $CHANGED"
-          echo "sites=$CHANGED" >> $GITHUB_OUTPUT
+          node -e "
+            const { execSync } = require('child_process');
+            const fs = require('fs');
+            try {
+              const diff = execSync('git diff --name-only HEAD~1 HEAD', { encoding: 'utf-8' });
+              const files = diff.split('\n').map(s => s.trim()).filter(Boolean);
+              const changed = new Set();
+              for (const f of files) {
+                const parts = f.split(/[\\\/]/);
+                if (parts.length >= 2 && ['content', 'app', 'src'].includes(parts[1])) {
+                  changed.add(parts[0]);
+                }
+              }
+              const sites = Array.from(changed).join(' ');
+              console.log('Detected changed sites:', sites);
+              fs.appendFileSync(process.env.GITHUB_OUTPUT, 'sites=' + sites + '\n');
+            } catch (err) {
+              console.log('Error detecting diff:', err.message);
+              fs.appendFileSync(process.env.GITHUB_OUTPUT, 'sites=\n');
+            }
+          "
 
       - name: Check VPS Configuration
         id: vps_check
