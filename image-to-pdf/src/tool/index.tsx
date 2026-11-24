@@ -23,6 +23,9 @@ export const Tool: React.FC = () => {
   const [isGenerating, setIsGenerating] = useState<boolean>(false);
 
   const handleReset = () => {
+    images.forEach((img) => {
+      if (img.previewUrl) URL.revokeObjectURL(img.previewUrl);
+    });
     setPageSize('A4');
     setOrientation('portrait');
     setMarginPt(36);
@@ -67,6 +70,7 @@ export const Tool: React.FC = () => {
       };
       reader.readAsArrayBuffer(file);
     }
+    e.target.value = '';
   };
 
   const moveUp = (idx: number) => {
@@ -92,7 +96,13 @@ export const Tool: React.FC = () => {
   };
 
   const removeImage = (id: string) => {
-    setImages((prev) => prev.filter((img) => img.id !== id));
+    setImages((prev) => {
+      const target = prev.find((img) => img.id === id);
+      if (target?.previewUrl) {
+        URL.revokeObjectURL(target.previewUrl);
+      }
+      return prev.filter((img) => img.id !== id);
+    });
   };
 
   const handleGeneratePdf = async () => {
@@ -113,7 +123,7 @@ export const Tool: React.FC = () => {
       a.href = url;
       a.download = 'converted-document.pdf';
       a.click();
-      URL.revokeObjectURL(url);
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
     } catch (err) {
       console.error('PDF Generation failed', err);
     } finally {

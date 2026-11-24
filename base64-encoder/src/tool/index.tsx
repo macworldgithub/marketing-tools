@@ -78,7 +78,7 @@ export const Tool: React.FC = () => {
     a.href = url;
     a.download = mode === 'encode' ? 'encoded.b64.txt' : 'decoded.txt';
     a.click();
-    URL.revokeObjectURL(url);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
   return (

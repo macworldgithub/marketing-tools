@@ -68,7 +68,7 @@ export const Tool: React.FC = () => {
     a.href = url;
     a.download = `fake-identities-${locale.toLowerCase()}-${people.length}.csv`;
     a.click();
-    URL.revokeObjectURL(url);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
   return (

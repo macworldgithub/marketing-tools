@@ -19,6 +19,9 @@ export const Tool: React.FC = () => {
 
   const handleFileSelect = (selectedFile: File) => {
     if (!selectedFile.type.startsWith('image/')) return;
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+    }
     setFile(selectedFile);
 
     const img = new Image();
@@ -28,6 +31,9 @@ export const Tool: React.FC = () => {
       setTargetWidth(String(img.naturalWidth));
       setTargetHeight(String(img.naturalHeight));
       setPreviewUrl(objectUrl);
+    };
+    img.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
     };
     img.src = objectUrl;
   };
@@ -58,6 +64,12 @@ export const Tool: React.FC = () => {
   };
 
   const handleReset = () => {
+    if (previewUrl) {
+      URL.revokeObjectURL(previewUrl);
+    }
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
     setFile(null);
     setOrigDims(null);
     setTargetWidth('');
@@ -108,7 +120,7 @@ export const Tool: React.FC = () => {
           a.href = url;
           a.download = `resized-${w}x${h}.${ext}`;
           a.click();
-          URL.revokeObjectURL(url);
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
           setIsProcessing(false);
         },
         format,

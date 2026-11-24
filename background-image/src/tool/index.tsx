@@ -79,7 +79,9 @@ export function Tool() {
     // Use a preview resolution proportional to target aspect ratio
     const maxPreviewW = 640;
     const maxPreviewH = 360;
-    const aspect = width / height;
+    const safeW = Math.max(1, width || 1920);
+    const safeH = Math.max(1, height || 1080);
+    const aspect = safeW / safeH;
 
     let pW = maxPreviewW;
     let pH = Math.round(maxPreviewW / aspect);
@@ -135,7 +137,7 @@ export function Tool() {
           document.body.appendChild(a);
           a.click();
           document.body.removeChild(a);
-          URL.revokeObjectURL(url);
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
           setDownloading(false);
         },
         format === 'png' ? 'image/png' : 'image/jpeg',

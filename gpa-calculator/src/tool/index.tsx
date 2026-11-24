@@ -35,10 +35,20 @@ export const Tool: React.FC = () => {
     return () => window.removeEventListener('tool:refresh', handleGlobalRefresh);
   }, []);
 
-  const result = calculateGPA(
-    courses,
-    hasCumulative ? { previousGpa: prevGpa, previousCredits: prevCredits } : undefined
-  );
+  let result: ReturnType<typeof calculateGPA>;
+  try {
+    result = calculateGPA(
+      courses,
+      hasCumulative ? { previousGpa: prevGpa, previousCredits: prevCredits } : undefined
+    );
+  } catch {
+    result = {
+      gpa: '0.00',
+      rawGpa: 0,
+      totalCredits: 0,
+      totalQualityPoints: '0.00',
+    };
+  }
 
   const addCourse = () => {
     const newId = String(Date.now());

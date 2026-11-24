@@ -78,7 +78,7 @@ export const Tool: React.FC = () => {
     a.href = url;
     a.download = 'qrcode.svg';
     a.click();
-    URL.revokeObjectURL(url);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
   return (

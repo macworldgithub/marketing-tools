@@ -64,7 +64,10 @@ export const Tool: React.FC = () => {
           reader.readAsArrayBuffer(blob);
         }, 'image/png');
       };
-      img.onerror = reject;
+      img.onerror = (err) => {
+        URL.revokeObjectURL(url);
+        reject(err);
+      };
       img.src = url;
     });
   };
@@ -84,6 +87,7 @@ export const Tool: React.FC = () => {
       console.error(err);
     } finally {
       setIsProcessing(false);
+      e.target.value = '';
     }
   };
 
@@ -100,7 +104,7 @@ export const Tool: React.FC = () => {
     a.href = url;
     a.download = 'converted-png-images.zip';
     a.click();
-    URL.revokeObjectURL(url);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
   return (

@@ -33,6 +33,18 @@ export const Tool: React.FC = () => {
     error = err.message || 'Invalid calculation values.';
   }
 
+  const handleToggleTermMode = () => {
+    if (isYears) {
+      const y = parseInt(termYears, 10) || 1;
+      setTermMonths(String(y * 12));
+      setIsYears(false);
+    } else {
+      const m = parseInt(termMonths, 10) || 12;
+      setTermYears(String(Math.max(1, Math.round(m / 12))));
+      setIsYears(true);
+    }
+  };
+
   const handleDownloadCsv = () => {
     if (!result || result.schedule.length === 0) return;
     const header = 'Period,Payment,Principal,Interest,Remaining Balance\n';
@@ -45,7 +57,7 @@ export const Tool: React.FC = () => {
     a.href = url;
     a.download = 'loan-amortization-schedule.csv';
     a.click();
-    URL.revokeObjectURL(url);
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
 
   const handleReset = () => {
@@ -109,7 +121,7 @@ export const Tool: React.FC = () => {
             <label className="text-sm font-medium text-slate-700 dark:text-slate-300">Loan Term</label>
             <button
               type="button"
-              onClick={() => setIsYears(!isYears)}
+              onClick={handleToggleTermMode}
               className="text-xs text-accent-primary hover:underline"
             >
               Switch to {isYears ? 'Months' : 'Years'}

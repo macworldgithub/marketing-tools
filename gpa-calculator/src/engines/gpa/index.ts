@@ -68,15 +68,20 @@ export function calculateGPA(
 
   for (const course of courses) {
     const basePoints = GRADE_POINTS[course.grade];
-    if (basePoints === null) continue; // P/F excluded
+    if (basePoints === null || basePoints === undefined) continue; // P/F excluded
 
-    const creditsDecimal = new Decimal(course.credits || 0);
+    let creditsDecimal: Decimal;
+    try {
+      creditsDecimal = new Decimal(course.credits || 0);
+    } catch {
+      continue;
+    }
     if (creditsDecimal.lte(0)) continue; // 0 credits ignored
 
     let pointsPerCredit = new Decimal(basePoints);
     // Weight bonus applies only to grades above F (i.e. > 0)
     if (course.level && course.level !== 'Regular' && basePoints > 0) {
-      pointsPerCredit = pointsPerCredit.plus(LEVEL_BONUS[course.level]);
+      pointsPerCredit = pointsPerCredit.plus(LEVEL_BONUS[course.level] || 0);
     }
 
     totalPointsDecimal = totalPointsDecimal.plus(pointsPerCredit.times(creditsDecimal));
@@ -98,15 +103,19 @@ export function calculateGPA(
   let cumulativeTotalCredits: number | undefined;
 
   if (cumulative && cumulative.previousCredits && Number(cumulative.previousCredits) > 0) {
-    const prevGpaDec = new Decimal(cumulative.previousGpa || 0);
-    const prevCreditsDec = new Decimal(cumulative.previousCredits);
+    try {
+      const prevGpaDec = new Decimal(cumulative.previousGpa || 0);
+      const prevCreditsDec = new Decimal(cumulative.previousCredits);
 
-    const prevPoints = prevGpaDec.times(prevCreditsDec);
-    const cumPoints = prevPoints.plus(totalPointsDecimal);
-    const cumCredits = prevCreditsDec.plus(totalCreditsDecimal);
+      const prevPoints = prevGpaDec.times(prevCreditsDec);
+      const cumPoints = prevPoints.plus(totalPointsDecimal);
+      const cumCredits = prevCreditsDec.plus(totalCreditsDecimal);
 
-    cumulativeGpa = cumPoints.dividedBy(cumCredits).toFixed(2, Decimal.ROUND_HALF_UP);
-    cumulativeTotalCredits = cumCredits.toNumber();
+      cumulativeGpa = cumPoints.dividedBy(cumCredits).toFixed(2, Decimal.ROUND_HALF_UP);
+      cumulativeTotalCredits = cumCredits.toNumber();
+    } catch {
+      // Ignore invalid cumulative numbers gracefully
+    }
   }
 
   return {
